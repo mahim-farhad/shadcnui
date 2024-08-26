@@ -1,8 +1,10 @@
 "use client";
 
-import { logoutUserAction } from "@utils/data/actions/auth-actions";
+import { logoutUserAction }
+  from "@utils/data/actions/auth-actions";
 
 import Typography from "@components/ui/Typography";
+import Link from "@components/ui/Link";
 import Button from "@components/ui/Button";
 
 import Main from "@components/layouts/Main";
@@ -38,7 +40,7 @@ function Dashboard() {
               "shadow-xl"
             ]}
           >
-            <Typography type="h4" className="font-sans">
+            <Typography type="h4" className="font-sans text-black dark:text-black">
               Welcome to the Dashboard Page
             </Typography>
 
@@ -52,6 +54,14 @@ function Dashboard() {
                 Logout
               </Button>
             </form>
+
+            <Link
+              href="/"
+              transition
+              className="font-medium dark:text-gray-600"
+            >
+              Go to <span className="dark:text-primary">Home</span>
+            </Link>
           </Box>
         </Container>
       </Section>

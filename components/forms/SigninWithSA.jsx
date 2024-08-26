@@ -9,6 +9,7 @@ import Textfield from "@components/inputs/Textfield";
 import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
+import Link from "@components/ui/Link";
 
 const INITIAL_STATE = {
   data: null,
@@ -58,6 +59,22 @@ function SigninWithSA() {
           Login
         </Button>
       </Box>
+
+      <Link
+        href="/auth/register"
+        transition
+        className="text-center font-medium dark:text-gray-600"
+      >
+        Already a user? <span className="dark:text-primary">Signup</span>
+      </Link>
+
+      <Link
+        href="/dashboard"
+        transition
+        className="text-center font-medium dark:text-gray-600"
+      >
+        Go to <span className="dark:text-primary">dashboard</span>
+      </Link>
     </form>
   );
 };

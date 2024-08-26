@@ -1,4 +1,9 @@
+import { logoutUserAction } from
+  "@utils/data/actions/auth-actions";
+
 import Typography from "@components/ui/Typography";
+import Link from "@components/ui/Link";
+import Button from "@components/ui/Button";
 
 import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
@@ -33,9 +38,28 @@ function Home() {
               "shadow-xl"
             ]}
           >
-            <Typography type="h4" className="font-sans">
+            <Typography type="h4" className="font-sans text-black dark:text-black">
               Welcome to the Home Page
             </Typography>
+
+            <Typography>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Accusamus quae ut natus commodi,
+            </Typography>
+
+            <form action={logoutUserAction}>
+              <Button type="submit">
+                Logout
+              </Button>
+            </form>
+
+            <Link
+              href="/dashboard"
+              transition
+              className="font-medium dark:text-gray-600"
+            >
+              Go to <span className="dark:text-primary">dashboard</span>
+            </Link>
           </Box>
         </Container>
       </Section>

@@ -16,9 +16,7 @@ function getTextfieldClasses(size, rounded, isValid, isInvalid, className) {
       "block",
       "py-1 px-4",
       "font-sans text-sm leading-[16px] font-medium uppercase",
-      isInvalid
-        ? "text-error dark:text-error"
-        : "text-gray-400 dark:text-gray-400",
+      "text-gray-400 dark:text-gray-400",
       "transition-all duration-150 ease-in-out"
     )),
     inputWrapper: twMerge(clsx(

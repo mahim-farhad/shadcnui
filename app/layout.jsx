@@ -1,8 +1,10 @@
 import { poppins, montserrat, firaCode } from "@libs/fonts";
 
-import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
 
 import "@styles/globals.css";
+
+import ThemeProvider from "@components/ThemeProvider";
 
 import { Toaster } from "@components/ui/Sonner";
 
@@ -16,20 +18,24 @@ export const viewport = {
 };
 
 function RootLayout({ children }) {
-  const bodyClasses = twMerge(
-    poppins.variable, montserrat.variable, firaCode.variable,
-    "antialiased font-sans text-base leading-normal font-normal",
-    "select-none overflow-x-hidden",
-    "text-foreground-light dark:text-foreground-dark",
-    "bg-background-light dark:bg-background-light"
+  const bodyClasses = clsx(
+    poppins.variable,
+    montserrat.variable,
+    firaCode.variable,
   );
 
   return (
     <html lang="en">
       <body className={bodyClasses}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem={true}
+        >
+          {children}
 
-        <Toaster />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

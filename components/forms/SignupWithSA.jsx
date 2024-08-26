@@ -12,11 +12,12 @@ import Textfield from "@components/inputs/Textfield";
 import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
+import Link from "@components/ui/Link";
 
 const INITIAL_STATE = {
-  zodErrors: null,
-  strapiErrors: null,
   data: null,
+  zodErrors: null,
+  serverErrors: null,
   message: null,
 };
 
@@ -29,17 +30,21 @@ function SignupWithSA() {
   const { pending } = useFormStatus();
 
   useEffect(() => {
-    toast(formState.message);
-  }, [formState]);
+    if (formState?.message) {
+      toast.error(formState?.message, {
+        position: 'top-center',
+      });
+    }
+  }, [formState?.message]);
 
   return (
     <form action={formAction} className="space-y-8">
-
       <Textfield
         type="text"
         name="username"
         label="Username"
         placeholder="Enter your name"
+        icon="User"
         isRequired
         error={
           formState?.zodErrors?.username ||
@@ -51,6 +56,7 @@ function SignupWithSA() {
         type="email"
         name="email"
         label="Email"
+        icon="Mail"
         placeholder="Enter your mail"
         isRequired
         error={
@@ -63,6 +69,7 @@ function SignupWithSA() {
         type="password"
         name="password"
         label="Password"
+        icon="Lock"
         placeholder="Enter your password"
         isRequired
         error={
@@ -89,6 +96,14 @@ function SignupWithSA() {
           {pending ? "Submitting..." : "Submit"}
         </Button>
       </Box>
+
+      <Link
+        href="/auth/login"
+        transition="true"
+        className="text-center font-medium dark:text-gray-600"
+      >
+        Already a user? <span className="dark:text-primary">Login</span>
+      </Link>
     </form>
   );
 };

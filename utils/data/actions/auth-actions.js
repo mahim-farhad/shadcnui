@@ -42,16 +42,16 @@ async function registerUserAction(prevState, formData) {
       ...prevState,
       zodErrors: validatedFields.error.flatten().fieldErrors,
       serverErrors: null,
-      message: "Missing Fields. Failed to Register.",
+      message: "Required Fields Can't be Empty",
     };
   }
 
   try {
-    const responseData = await registerUserService(validatedFields.data);
+    const res = await registerUserService(validatedFields.data);
 
-    cookies().set("jwt", responseData.jwt, config);
+    cookies().set("jwt", res.jwt, config);
 
-    redirect("/auth/login");
+    // redirect("/auth/login");
   } catch (error) {
     console.log(error);
 
@@ -74,9 +74,9 @@ async function registerUserAction(prevState, formData) {
 
     return {
       ...prevState,
-      serverErrors: updatedServerErrors,
       zodErrors: null,
-      message: error.statusText,
+      serverErrors: updatedServerErrors,
+      message: serverErrors.message,
     };
   }
 }
@@ -110,13 +110,11 @@ async function loginUserAction(prevState, formData) {
   }
 
   try {
-    const responseData = await loginUserService(validatedFields.data);
+    const res = await loginUserService(validatedFields.data);
 
-    console.log(responseData);
+    cookies().set("jwt", res.jwt, config);
 
-    cookies().set("jwt", responseData.jwt, config);
-
-    redirect("/dashboard");
+    // redirect("/dashboard");
   } catch (error) {
 
     const serverErrors = error?.data?.error || {
@@ -137,8 +135,8 @@ async function loginUserAction(prevState, formData) {
 
     return {
       ...prevState,
-      serverErrors: updatedServerErrors,
       zodErrors: null,
+      serverErrors: updatedServerErrors,
       message: error.statusText,
     };
   }

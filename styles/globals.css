@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+  @apply 
+    antialiased font-sans text-base leading-normal
+    font-normal select-none overflow-x-hidden
+  text-foreground-light dark:text-foreground-dark
+  bg-background-light dark:bg-background-light
+}
