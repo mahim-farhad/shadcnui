@@ -1,14 +1,9 @@
 import {
-  createContext, forwardRef,
-  useContext, useId
+  createContext, useContext,
+  forwardRef, useId
 } from "react";
 
-import { Slot } from "@radix-ui/react-slot";
-
-import {
-  Controller, FormProvider,
-  useFormContext
-} from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 
 import clsx from "clsx";
 
@@ -17,26 +12,19 @@ import Typography from "@components/ui/Typography";
 
 import Box from "@components/layouts/Box";
 
-const Form = FormProvider;
-
 const FormFieldContext = createContext({});
 
-const FormField = (props) => {
-  return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
-    </FormFieldContext.Provider>
-  );
-};
+const FormItemContext = createContext({});
 
-const useFormField = () => {
+function useFormField() {
   const fieldContext = useContext(FormFieldContext);
 
   const itemContext = useContext(FormItemContext);
 
   const { getFieldState, formState } = useFormContext();
 
-  const fieldState = getFieldState(fieldContext.name, formState);
+  const fieldState =
+    getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
     throw new Error("useFormField should be used within <FormField>");
@@ -50,13 +38,19 @@ const useFormField = () => {
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
-    ...fieldState,
+    ...fieldState
   };
 };
 
-const FormItemContext = createContext({});
+function FormField(props) {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  );
+};
 
-const FormItem = forwardRef(({ className, ...props }, ref) => {
+const FormItem = forwardRef(function FormItem({ ...props }, ref) {
   const id = useId();
 
   return (
@@ -65,8 +59,8 @@ const FormItem = forwardRef(({ className, ...props }, ref) => {
         ref={ref}
         className={clsx(
           "relative",
-          "flex items-center",
-          className
+          "flex",
+          "items-center",
         )}
         {...props}
       />
@@ -76,8 +70,8 @@ const FormItem = forwardRef(({ className, ...props }, ref) => {
 
 FormItem.displayName = "FormItem";
 
-const FormLabel = forwardRef(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField();
+const FormLabel = forwardRef(function FormLabel({ ...props }, ref) {
+  const { formItemId } = useFormField();
 
   return (
     <label
@@ -88,9 +82,7 @@ const FormLabel = forwardRef(({ className, ...props }, ref) => {
         "block",
         "py-1 px-4",
         "font-sans text-sm leading-[16px] font-medium uppercase",
-        error
-          ? "text-error dark:text-error"
-          : "text-gray-400 dark:text-gray-400",
+        "text-gray-500 dark:text-gray-500",
         "transition-all duration-150 ease-in-out"
       )}
       {...props}
@@ -100,12 +92,10 @@ const FormLabel = forwardRef(({ className, ...props }, ref) => {
 
 FormLabel.displayName = "FormLabel";
 
-const FormControl = forwardRef(({ ...props }, ref) => {
+const FormControl = forwardRef(function FormControl({ ...props }, ref) {
   const {
-    error,
-    formInputId,
-    formDescriptionId,
-    formMessageId
+    formItemId, formDescriptionId,
+    formMessageId, error
   } = useFormField();
 
   return (
@@ -113,14 +103,14 @@ const FormControl = forwardRef(({ ...props }, ref) => {
       ref={ref}
       role="textfield"
       aria-label="textfield"
-      aria-labelledby={name}
+      // aria-labelledby={name}
       aria-describedby={
         !error
           ? `${formDescriptionId}`
           : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
-      id={formInputId}
+      id={formItemId}
       className={clsx(
         "z-10 relative",
         "w-full h-12",
@@ -148,50 +138,12 @@ const FormControl = forwardRef(({ ...props }, ref) => {
 
 FormControl.displayName = "FormControl";
 
-const FormInput = forwardRef(({ rounded, ...props }, ref) => {
-  const { error, formInputId } = useFormField();
-
-  return (
-    <input
-      ref={ref}
-      role="textfield"
-      aria-label="textfield"
-      aria-labelledby={name}
-      id={formInputId}
-      className={clsx(
-        "z-10 relative",
-        "w-full h-12",
-        "pl-[calc(1rem-2px)] pr-[calc(3rem-2px)] my-6",
-        // textfieldVariants?.size?.input,
-        "font-sans text-base font-normal",
-        "whitespace-nowrap appearance-none cursor-pointer",
-        "text-gray-400 dark:text-gray-400",
-        "bg-white dark:bg-white",
-        "outline-none border",
-        "focus:border-primary focus:dark:border-primary",
-        error
-          ? "border-error dark:border-error"
-          : "border-gray-200 dark:border-gray-200",
-        rounded ? "rounded-full" : "rounded-lg",
-        "disabled:pointer-events-none",
-        "disabled:cursor-not-allowed",
-        "disabled:opacity-50",
-        "transition-all duration-150 ease-in-out"
-      )}
-      {...props}
-    />
-  );
-});
-
-FormInput.displayName = "FormInput";
-
-const FormIcon = forwardRef(({ name }, ref) => {
-  const { error, formIconId } = useFormField();
+const FormIcon = forwardRef(function FormIcon({ name }, ref) {
+  const { error } = useFormField();
 
   return (
     <span
       ref={ref}
-      id={formIconId}
       className={clsx(
         "z-10 absolute right-0",
         "flex items-center justify-center",
@@ -214,7 +166,7 @@ const FormIcon = forwardRef(({ name }, ref) => {
 
 FormIcon.displayName = "FormIcon";
 
-const FormDescription = forwardRef(({ className, ...props }, ref) => {
+const FormDescription = forwardRef(function FormDescription({ ...props }, ref) {
   const { formDescriptionId } = useFormField();
 
   return (
@@ -222,8 +174,8 @@ const FormDescription = forwardRef(({ className, ...props }, ref) => {
       ref={ref}
       id={formDescriptionId}
       className={clsx(
-        "text-sm text-muted-foreground",
-        className
+        "text-sm",
+        "text-foreground-light"
       )}
       {...props}
     />
@@ -232,10 +184,10 @@ const FormDescription = forwardRef(({ className, ...props }, ref) => {
 
 FormDescription.displayName = "FormDescription";
 
-const FormMessage = forwardRef(({ children, className, ...props }, ref) => {
-  const { error, formMessageId } = useFormField();
+const FormMessage = forwardRef(function FormMessage({ ...props }, ref) {
+  const { formMessageId, error, } = useFormField();
 
-  const body = error ? String(error?.message) : children;
+  const body = error ? String(error?.message) : undefined;
 
   if (!body) return null;
 
@@ -262,8 +214,7 @@ const FormMessage = forwardRef(({ children, className, ...props }, ref) => {
 FormMessage.displayName = "FormMessage";
 
 export {
-  useFormField, Form,
-  FormItem, FormLabel, FormControl, FormInput,
-  FormIcon, FormDescription, FormMessage,
-  FormField,
+  FormField, FormItem, FormLabel,
+  FormControl, FormIcon,
+  FormDescription, FormMessage,
 };

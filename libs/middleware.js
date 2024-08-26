@@ -1,23 +1,17 @@
-import { NextResponse } from 'next/server';
+// import { NextResponse } from "next/server";
 
-import { jwtVerify } from 'jose';
+// import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
 
-export async function middleware(req) {
-  const token = req.cookies.get('jwt');
+// export async function middleware(request) {
+//   const user = await getUserMeLoader();
 
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
+//   const currentPath = request.nextUrl.pathname;
 
-  try {
-    await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
+//   if (currentPath.startsWith("/dashboard") && user.ok === false) {
+//     return NextResponse.redirect(
+//       new URL("/signin", request.url)
+//     );
+//   }
 
-    return NextResponse.next();
-  } catch (error) {
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
-}
-
-export const config = {
-  matcher: ['/protected/:path*'], // Specify protected routes
-};
+//   return NextResponse.next();
+// }

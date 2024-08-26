@@ -1,8 +1,12 @@
 import { useState, useCallback } from "react";
 
+import { useRouter } from "next/navigation";
+
 import registerUser from "@api/registerApi";
 
-const useFormHook = () => {
+const useFormHook = (form) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
 
@@ -16,7 +20,10 @@ const useFormHook = () => {
         data?.password
       );
 
-      console.log(res);
+      setTimeout(() => {
+        router.push("/success");
+      }, 2000);
+
     } catch (error) {
       const serverErrors = error?.data?.error || {};
 

@@ -4,6 +4,8 @@ import { twMerge } from "tailwind-merge";
 
 import "@styles/globals.css";
 
+import { Toaster } from "@components/ui/sonner";
+
 export const metadata = {
   title: "React Shadcn Components",
   description: "..."
@@ -26,6 +28,8 @@ function RootLayout({ children }) {
     <html lang="en">
       <body className={bodyClasses}>
         {children}
+
+        <Toaster />
       </body>
     </html>
   );

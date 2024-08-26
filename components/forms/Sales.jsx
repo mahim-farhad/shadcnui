@@ -11,31 +11,30 @@ import useFormHook from "@hooks/useFormValidation";
 import Button from "@components/ui/button";
 
 import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormIcon,
-  FormDescription,
+  FormField, FormItem,
+  FormLabel, FormControl, FormIcon,
   FormMessage,
-} from "@components/forms/Form";
+} from "@components/inputs/Form";
+
+import Box from "@components/layouts/Box";
+
+const defaultValues = {
+  username: "",
+  email: "",
+  password: "",
+};
 
 const Sales = function Sales() {
-  // Initialize useForm with the Zod resolver
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
+    defaultValues,
   });
 
   const {
     loading,
     submissionError,
     onSubmit
-  } = useFormHook(form.data);
+  } = useFormHook(form);
 
   return (
     <FormProvider {...form}>
@@ -54,10 +53,6 @@ const Sales = function Sales() {
               />
 
               <FormIcon name="User" />
-
-              {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
 
               <FormMessage />
             </FormItem>
@@ -108,13 +103,24 @@ const Sales = function Sales() {
           <p className="text-red-500">{submissionError}</p>
         )}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="w-full mt-4"
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </Button>
+        <Box className="flex items-center gap-4 pt-4">
+          <Button
+            type="button"
+            variant="toned"
+            onClick={() => form.reset({ defaultValues })}
+            className="w-full"
+          >
+            Reset
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
+        </Box>
       </form>
     </FormProvider>
   );

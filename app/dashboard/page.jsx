@@ -1,6 +1,6 @@
 "use client";
 
-import { logoutAction } from "@utils/data/actions/auth-actions";
+import { logoutUserAction } from "@utils/data/actions/auth-actions";
 
 import Typography from "@components/ui/Typography";
 import Button from "@components/ui/Button";
@@ -10,7 +10,7 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-function Home() {
+function Dashboard() {
   return (
     <Main>
       <Section
@@ -39,7 +39,7 @@ function Home() {
             ]}
           >
             <Typography type="h4" className="font-sans">
-              Welcome to the Home Page
+              Welcome to the Dashboard Page
             </Typography>
 
             <Typography>
@@ -47,7 +47,7 @@ function Home() {
               Accusamus quae ut natus commodi,
             </Typography>
 
-            <form action={logoutAction}>
+            <form action={logoutUserAction}>
               <Button type="submit">
                 Logout
               </Button>
@@ -59,4 +59,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;

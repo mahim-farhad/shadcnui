@@ -1,16 +1,11 @@
-"use client";
-
-import { logoutAction } from "@utils/data/actions/auth-actions";
-
-import Typography from "@components/ui/Typography";
-import Button from "@components/ui/Button";
-
 import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-function Home() {
+import SigninWithSA from "@components/forms/SigninWithSA";
+
+function Login() {
   return (
     <Main>
       <Section
@@ -38,20 +33,7 @@ function Home() {
               "shadow-xl"
             ]}
           >
-            <Typography type="h4" className="font-sans">
-              Welcome to the Home Page
-            </Typography>
-
-            <Typography>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Accusamus quae ut natus commodi,
-            </Typography>
-
-            <form action={logoutAction}>
-              <Button type="submit">
-                Logout
-              </Button>
-            </form>
+            <SigninWithSA />
           </Box>
         </Container>
       </Section>
@@ -59,4 +41,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Login;
