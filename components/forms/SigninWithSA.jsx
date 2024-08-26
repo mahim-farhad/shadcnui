@@ -6,7 +6,7 @@ import { loginUserAction }
   from "@utils/data/actions/auth-actions";
 
 import Textfield from "@components/inputs/Textfield";
-import Button from "@components/ui/button";
+import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
 

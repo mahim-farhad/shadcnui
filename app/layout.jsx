@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 import "@styles/globals.css";
 
-import { Toaster } from "@components/ui/sonner";
+import { Toaster } from "@components/ui/Sonner";
 
 export const metadata = {
   title: "React Shadcn Components",

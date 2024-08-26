@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { useFormState, useFormStatus } from "react-dom";
 
 import { toast } from "sonner";
@@ -7,10 +9,9 @@ import { toast } from "sonner";
 import { registerUserAction } from "@utils/data/actions/auth-actions";
 
 import Textfield from "@components/inputs/Textfield";
-import Button from "@components/ui/button";
+import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
-import { useEffect } from "react";
 
 const INITIAL_STATE = {
   zodErrors: null,
