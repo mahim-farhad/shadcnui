@@ -1,9 +1,4 @@
-"use client";
-
-import { logoutAction } from "@utils/data/actions/auth-actions";
-
 import Typography from "@components/ui/Typography";
-import Button from "@components/ui/Button";
 
 import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
@@ -41,17 +36,6 @@ function Home() {
             <Typography type="h4" className="font-sans">
               Welcome to the Home Page
             </Typography>
-
-            <Typography>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Accusamus quae ut natus commodi,
-            </Typography>
-
-            <form action={logoutAction}>
-              <Button type="submit">
-                Logout
-              </Button>
-            </form>
           </Box>
         </Container>
       </Section>
