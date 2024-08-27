@@ -48,7 +48,7 @@ function SigninWithSA() {
       method="post"
       className="space-y-8"
     >
-      <input type="hidden" name="redirectTo" value={redirectTo} />
+      {/* <input type="hidden" name="redirectTo" value={redirectTo} /> */}
 
       <Textfield
         type="text"
