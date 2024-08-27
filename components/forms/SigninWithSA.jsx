@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { useFormState, useFormStatus } from "react-dom";
 
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 
 import { toast } from "sonner";
 
@@ -24,8 +24,8 @@ const INITIAL_STATE = {
 };
 
 function SigninWithSA() {
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirectTo') || '/';
+  // const searchParams = useSearchParams();
+  // const redirectTo = searchParams.get('redirectTo') || '/';
 
   const [formState, formAction] = useFormState(
     loginUserAction,
