@@ -8,7 +8,7 @@ import { formSchema } from "@libs/schema";
 
 import useFormHook from "@hooks/useFormValidation";
 
-import Button from "@components/ui/button";
+import Button from "@components/ui/Button";
 
 import {
   FormField, FormItem,
