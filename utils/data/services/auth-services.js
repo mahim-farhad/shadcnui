@@ -50,8 +50,6 @@ async function loginUserService(userData) {
       throw new Error("Failed to login user");
     }
   } catch (error) {
-    console.log(error);
-
     throw error.response ||
     new Error("An error occurred during authentication");
   }

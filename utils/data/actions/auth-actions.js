@@ -3,58 +3,48 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { z } from "zod";
+import bcrypt from 'bcrypt';
+
+import { createSession } from "@libs/session";
+
+import {
+  SignupFormSchema,
+  SigninFormSchema
+} from "@libs/schema";
 
 import {
   registerUserService,
   loginUserService
 } from "@utils/data/services/auth-services";
 
-const config = {
-  maxAge: 60 * 60 * 24 * 7,
-  path: "/",
-  domain: process.env.HOST ?? "localhost",
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-};
-
-const schemaRegister = z.object({
-  username: z.string().min(3).max(20, {
-    message: "Username must be between 3 and 20 characters",
-  }),
-  password: z.string().min(6).max(100, {
-    message: "Password must be between 6 and 100 characters",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address",
-  }),
-});
-
 async function registerUserAction(prevState, formData) {
-  const validatedFields = schemaRegister.safeParse({
+  const validatedFields = SignupFormSchema.safeParse({
     username: formData.get("username"),
-    password: formData.get("password"),
     email: formData.get("email"),
+    password: formData.get("password")
   });
 
   if (!validatedFields.success) {
     return {
       ...prevState,
-      zodErrors: validatedFields.error.flatten().fieldErrors,
-      serverErrors: null,
+      errors: validatedFields.error.flatten().fieldErrors,
       message: "Required Fields Can't be Empty",
     };
   }
 
+  const { username, email, password } = validatedFields.data;
+
+  // const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
-    const res = await registerUserService(validatedFields.data);
+    const res = await registerUserService({
+      username,
+      email,
+      password
+    });
 
-    cookies().set("jwt", res.jwt, config);
-
-    // redirect("/auth/login");
+    createSession(res.jwt);
   } catch (error) {
-    console.log(error);
-
     const serverErrors = error?.data?.error || {
       message: "Ops! Something went wrong. Please try again."
     };
@@ -74,54 +64,43 @@ async function registerUserAction(prevState, formData) {
 
     return {
       ...prevState,
-      zodErrors: null,
-      serverErrors: updatedServerErrors,
+      errors: updatedServerErrors,
       message: serverErrors.message,
     };
   }
+
+  redirect("/");
 }
 
-const schemaLogin = z.object({
-  identifier: z.string().min(3, {
-    message: "Identifier must have at least 3 or more characters",
-  }).max(200, {
-    message: "Please enter a valid username or email address",
-  }),
-  password: z.string().min(6, {
-    message: "Password must have at least 6 or more characters",
-  }).max(100, {
-    message: "Password must be between 6 and 100 characters",
-  }),
-});
-
 async function loginUserAction(prevState, formData) {
-  const validatedFields = schemaLogin.safeParse({
+  const validatedFields = SigninFormSchema.safeParse({
     identifier: formData.get("identifier"),
     password: formData.get("password"),
   });
 
+  const redirectTo = formData.get("redirectTo") || "/";
+
   if (!validatedFields.success) {
     return {
       ...prevState,
-      zodErrors: validatedFields.error.flatten().fieldErrors,
-      serverErrors: null,
+      errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Login.",
     };
   }
 
+  const { identifier, password } = validatedFields.data;
+
   try {
-    const res = await loginUserService(validatedFields.data);
+    const res = await loginUserService({
+      identifier,
+      password
+    });
 
-    cookies().set("jwt", res.jwt, config);
-
-    // redirect("/dashboard");
+    createSession(res.jwt);
   } catch (error) {
-
     const serverErrors = error?.data?.error || {
       message: "Ops! Something went wrong. Please try again."
     };
-
-    console.log(serverErrors);
 
     const updatedServerErrors = {};
 
@@ -135,17 +114,18 @@ async function loginUserAction(prevState, formData) {
 
     return {
       ...prevState,
-      zodErrors: null,
-      serverErrors: updatedServerErrors,
+      errors: updatedServerErrors,
       message: error.statusText,
     };
   }
+
+  redirect(redirectTo);
 }
 
 async function logoutUserAction() {
   cookies().set("jwt", "", { maxAge: -1 });
 
-  redirect("/auth/register");
+  redirect("/auth/login");
 }
 
 export {

@@ -1,15 +1,11 @@
-// "use client";
+"use client";
 
-// import { useEffect } from "react";
+import { useEffect } from "react";
 
-// import { useSearchParams } from "next/navigation";
-
-// import { toast } from "sonner";
+import getUser from "@api/fecthUserApi";
 
 import { logoutUserAction } from
   "@utils/data/actions/auth-actions";
-
-import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
 
 import Typography from "@components/ui/Typography";
 import Link from "@components/ui/Link";
@@ -20,21 +16,22 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-async function Home() {
-  // const searchParams = useSearchParams();
-  // const message = searchParams.get("message");
+function UserProfile() {
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   toast.error(message, {
-  //     position: 'top-center',
-  //   });
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await getUser('/users/me?populate=*'); // Replace with the correct API path
+        setUserData(data);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch user data');
+      }
+    };
 
-  //   // window.history.replaceState(null, "", window.location.pathname);
-  // }, [message]);
-
-  const user = await getUserMeLoader();
-
-  console.log(user);
+    fetchUserData();
+  }, []);
 
   return (
     <Main>
@@ -67,6 +64,11 @@ async function Home() {
               Welcome to the Home Page
             </Typography>
 
+            <Typography>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Accusamus quae ut natus commodi,
+            </Typography>
+
             <form action={logoutUserAction}>
               <Button type="submit">
                 Logout
@@ -87,4 +89,4 @@ async function Home() {
   );
 }
 
-export default Home;
+export default UserProfile;

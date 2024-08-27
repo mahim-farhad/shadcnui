@@ -1,11 +1,3 @@
-// "use client";
-
-// import { useEffect } from "react";
-
-// import { useSearchParams } from "next/navigation";
-
-// import { toast } from "sonner";
-
 import { logoutUserAction } from
   "@utils/data/actions/auth-actions";
 
@@ -20,21 +12,8 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-async function Home() {
-  // const searchParams = useSearchParams();
-  // const message = searchParams.get("message");
-
-  // useEffect(() => {
-  //   toast.error(message, {
-  //     position: 'top-center',
-  //   });
-
-  //   // window.history.replaceState(null, "", window.location.pathname);
-  // }, [message]);
-
+async function Admin() {
   const user = await getUserMeLoader();
-
-  console.log(user);
 
   return (
     <Main>
@@ -64,7 +43,7 @@ async function Home() {
             ]}
           >
             <Typography type="h4" className="font-sans text-black dark:text-black">
-              Welcome to the Home Page
+              Welcome to the Admin Page
             </Typography>
 
             <form action={logoutUserAction}>
@@ -87,4 +66,4 @@ async function Home() {
   );
 }
 
-export default Home;
+export default Admin;

@@ -4,6 +4,7 @@ import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
 import SignupWithSA from "@components/forms/SignupWithSA";
+import Sales from "@components/forms/Sales";
 
 function Register() {
   return (
@@ -34,6 +35,8 @@ function Register() {
             ]}
           >
             <SignupWithSA />
+
+            <Sales />
           </Box>
         </Container>
       </Section>

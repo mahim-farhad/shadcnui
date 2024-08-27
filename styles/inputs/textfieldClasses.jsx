@@ -53,10 +53,10 @@ function getTextfieldClasses(size, rounded, isValid, isInvalid, className) {
         : "text-gray-400 dark:text-gray-400",
       "transition-all duration-150 ease-in-out"
     )),
-    helperTextWrapper: "z-10 absolute -bottom-1/2",
+    helperTextWrapper: "z-10 absolute -bottom-1/2 w-full",
     helperText: twMerge(clsx(
       "py-1 px-4",
-      "text-xs font-semibold uppercase",
+      "text-xs font-semibold uppercase truncate",
       isInvalid
         ? "text-error dark:text-error"
         : "text-gray-400 dark:text-gray-300",

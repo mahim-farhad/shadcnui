@@ -14,12 +14,25 @@ export async function getUserMeLoader() {
     if (res.ok) {
       const data = await res.json();
 
-      return { ok: true, data, error: null };
+      return {
+        ok: true,
+        data,
+        error: null
+      };
     } else {
       const errorData = await res.json();
-      return { ok: false, data: null, error: errorData.error };
+
+      return {
+        ok: false,
+        data: null,
+        error: errorData.error
+      };
     }
   } catch (error) {
-    return { ok: false, data: null, error: "An error occurred while fetching user data" };
+    return {
+      ok: false,
+      data: null,
+      error: "An error occurred while fetching user data"
+    };
   }
 };

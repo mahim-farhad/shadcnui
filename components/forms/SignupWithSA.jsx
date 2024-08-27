@@ -6,18 +6,18 @@ import { useFormState, useFormStatus } from "react-dom";
 
 import { toast } from "sonner";
 
-import { registerUserAction } from "@utils/data/actions/auth-actions";
+import { registerUserAction }
+  from "@utils/data/actions/auth-actions";
 
+import Link from "@components/ui/Link";
 import Textfield from "@components/inputs/Textfield";
 import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
-import Link from "@components/ui/Link";
 
 const INITIAL_STATE = {
   data: null,
-  zodErrors: null,
-  serverErrors: null,
+  errors: null,
   message: null,
 };
 
@@ -37,8 +37,15 @@ function SignupWithSA() {
     }
   }, [formState?.message]);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!pending) {
+      await formAction(new FormData(event.target));
+    }
+  };
+
   return (
-    <form action={formAction} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8">
       <Textfield
         type="text"
         name="username"
@@ -46,10 +53,7 @@ function SignupWithSA() {
         placeholder="Enter your name"
         icon="User"
         isRequired
-        error={
-          formState?.zodErrors?.username ||
-          formState?.serverErrors?.username
-        }
+        error={formState?.errors?.username}
       />
 
       <Textfield
@@ -59,10 +63,7 @@ function SignupWithSA() {
         icon="Mail"
         placeholder="Enter your mail"
         isRequired
-        error={
-          formState?.zodErrors?.email ||
-          formState?.serverErrors?.email
-        }
+        error={formState?.errors?.email}
       />
 
       <Textfield
@@ -72,10 +73,7 @@ function SignupWithSA() {
         icon="Lock"
         placeholder="Enter your password"
         isRequired
-        error={
-          formState?.zodErrors?.password ||
-          formState?.serverErrors?.password
-        }
+        error={formState?.errors?.password}
       />
 
       <Box className="flex items-center gap-4 pt-4">
