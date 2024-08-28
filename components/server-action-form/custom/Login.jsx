@@ -4,9 +4,11 @@ import { useEffect } from "react";
 
 import { useFormState, useFormStatus } from "react-dom";
 
+// import { useSearchParams } from 'next/navigation';
+
 import { toast } from "sonner";
 
-import { registerUserAction }
+import { loginUserAction }
   from "@utils/data/actions/auth-actions";
 
 import Link from "@components/ui/Link";
@@ -21,9 +23,12 @@ const INITIAL_STATE = {
   message: null,
 };
 
-function SignupWithSA() {
+function LoginForm() {
+  // const searchParams = useSearchParams();
+  // const redirectTo = searchParams.get('redirectTo') || '/';
+
   const [formState, formAction] = useFormState(
-    registerUserAction,
+    loginUserAction,
     INITIAL_STATE
   );
 
@@ -37,73 +42,59 @@ function SignupWithSA() {
     }
   }, [formState?.message]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!pending) {
-      await formAction(new FormData(event.target));
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form
+      action={formAction}
+      method="post"
+      className="space-y-8"
+    >
+      {/* <input type="hidden" name="redirectTo" value={redirectTo} /> */}
+
       <Textfield
         type="text"
-        name="username"
-        label="Username"
-        placeholder="Enter your name"
-        icon="User"
+        name="identifier"
+        label="Email or Username"
+        placeholder="Enter your mail or username"
         isRequired
-        error={formState?.errors?.username}
-      />
-
-      <Textfield
-        type="email"
-        name="email"
-        label="Email"
-        icon="Mail"
-        placeholder="Enter your mail"
-        isRequired
-        error={formState?.errors?.email}
+        error={formState?.errors?.identifier}
       />
 
       <Textfield
         type="password"
         name="password"
         label="Password"
-        icon="Lock"
         placeholder="Enter your password"
         isRequired
         error={formState?.errors?.password}
       />
 
-      <Box className="flex items-center gap-4 pt-4">
-        <Button
-          type="button"
-          variant="toned"
-          // onClick={() => form.reset({ defaultValues })}
-          className="w-full"
-        >
-          Reset
-        </Button>
-
+      <Box className="flex items-center gap-4 py-4">
         <Button
           type="submit"
           disabled={pending}
           className="w-full"
         >
-          {pending ? "Submitting..." : "Submit"}
+          {pending ? "Submitting..." : "Login"}
         </Button>
       </Box>
 
       <Link
-        href="/auth/login"
-        transition="true"
+        href="/auth/register"
+        transition
         className="text-center font-medium dark:text-gray-600"
       >
-        Already a user? <span className="dark:text-primary">Login</span>
+        Already a user? <span className="dark:text-primary">Signup</span>
+      </Link>
+
+      <Link
+        href="/admin"
+        transition
+        className="text-center font-medium dark:text-gray-600"
+      >
+        Go to <span className="dark:text-primary">admin</span>
       </Link>
     </form>
   );
 };
 
-export default SignupWithSA;
+export default LoginForm;

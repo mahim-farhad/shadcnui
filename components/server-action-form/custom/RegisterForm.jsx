@@ -4,11 +4,9 @@ import { useEffect } from "react";
 
 import { useFormState, useFormStatus } from "react-dom";
 
-// import { useSearchParams } from 'next/navigation';
-
 import { toast } from "sonner";
 
-import { loginUserAction }
+import { registerUserAction }
   from "@utils/data/actions/auth-actions";
 
 import Link from "@components/ui/Link";
@@ -23,12 +21,9 @@ const INITIAL_STATE = {
   message: null,
 };
 
-function SigninWithSA() {
-  // const searchParams = useSearchParams();
-  // const redirectTo = searchParams.get('redirectTo') || '/';
-
+function RegisterForm() {
   const [formState, formAction] = useFormState(
-    loginUserAction,
+    registerUserAction,
     INITIAL_STATE
   );
 
@@ -43,58 +38,64 @@ function SigninWithSA() {
   }, [formState?.message]);
 
   return (
-    <form
-      action={formAction}
-      method="post"
-      className="space-y-8"
-    >
-      {/* <input type="hidden" name="redirectTo" value={redirectTo} /> */}
-
+    <form action={formAction} className="space-y-8">
       <Textfield
         type="text"
-        name="identifier"
-        label="Email or Username"
-        placeholder="Enter your mail or username"
+        name="username"
+        label="Username"
+        placeholder="Enter your name"
+        icon="User"
         isRequired
-        error={formState?.errors?.identifier}
+        error={formState?.errors?.username}
+      />
+
+      <Textfield
+        type="email"
+        name="email"
+        label="Email"
+        icon="Mail"
+        placeholder="Enter your mail"
+        isRequired
+        error={formState?.errors?.email}
       />
 
       <Textfield
         type="password"
         name="password"
         label="Password"
+        icon="Lock"
         placeholder="Enter your password"
         isRequired
         error={formState?.errors?.password}
       />
 
-      <Box className="flex items-center gap-4 pt-4">
+      <Box className="flex items-center gap-4 py-4">
+        <Button
+          type="button"
+          variant="toned"
+          className="w-full"
+        >
+          Reset
+        </Button>
+
         <Button
           type="submit"
           disabled={pending}
           className="w-full"
         >
-          {pending ? "Submitting..." : "Login"}
+          {pending ? "Submitting..." : "Submit"}
         </Button>
       </Box>
 
       <Link
-        href="/auth/register"
-        transition
+        href="/auth/login"
+        transition="true"
         className="text-center font-medium dark:text-gray-600"
       >
-        Already a user? <span className="dark:text-primary">Signup</span>
-      </Link>
-
-      <Link
-        href="/admin"
-        transition
-        className="text-center font-medium dark:text-gray-600"
-      >
-        Go to <span className="dark:text-primary">admin</span>
+        Already a user? <span className="dark:text-primary">Login</span>
       </Link>
     </form>
   );
 };
 
-export default SigninWithSA;
+export default RegisterForm;

@@ -11,27 +11,14 @@ const axiosInstance = axios.create({
   }
 });
 
-async function registerUser(username, email, password) {
+async function registerUser(userData) {
   try {
-    const res = await axiosInstance.post('/auth/local/register', {
-      username, email, password
+    const res = await axiosInstance.post("/auth/local/register", {
+      ...userData
     });
-
-    if (res.status !== 200) {
-      throw new Error("Failed to register user");
-    }
-
-    const { jwt } = res.data;
-
-    localStorage.setItem("access-token", jwt);
 
     return res.data;
   } catch (error) {
-    console.error(
-      "Error during registration:",
-      error.response ? error.response.data : error.message
-    );
-
     throw error.response ||
     new Error("An error occurred during registration");
   }

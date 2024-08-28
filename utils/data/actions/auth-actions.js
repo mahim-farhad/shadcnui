@@ -18,30 +18,24 @@ import {
 } from "@utils/data/services/auth-services";
 
 async function registerUserAction(prevState, formData) {
-  const validatedFields = SignupFormSchema.safeParse({
-    username: formData.get("username"),
-    email: formData.get("email"),
-    password: formData.get("password")
-  });
+  const data = Object.fromEntries(formData.entries());
+
+  const validatedFields = SignupFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
     return {
       ...prevState,
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Required Fields Can't be Empty",
+      message: "Required Fields Can't be Empty"
     };
   }
 
-  const { username, email, password } = validatedFields.data;
+  // const { username, email, password } = validatedFields.data;
 
   // const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const res = await registerUserService({
-      username,
-      email,
-      password
-    });
+    const res = await registerUserService(validatedFields.data);
 
     createSession(res.jwt);
   } catch (error) {
@@ -49,7 +43,10 @@ async function registerUserAction(prevState, formData) {
       message: "Ops! Something went wrong. Please try again."
     };
 
-    const updatedServerErrors = {};
+    const updatedServerErrors = {
+      usernme: "",
+      email: ""
+    };
 
     if (serverErrors.message.includes("Username", "Email")) {
       updatedServerErrors.username = serverErrors.message;
@@ -88,13 +85,10 @@ async function loginUserAction(prevState, formData) {
     };
   }
 
-  const { identifier, password } = validatedFields.data;
+  // const { identifier, password } = validatedFields.data;
 
   try {
-    const res = await loginUserService({
-      identifier,
-      password
-    });
+    const res = await loginUserService(validatedFields.data);
 
     createSession(res.jwt);
   } catch (error) {

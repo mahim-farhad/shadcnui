@@ -1,13 +1,21 @@
 "use client";
 
+import { useEffect } from "react";
+
+import { useFormState, useFormStatus } from "react-dom";
+
+import { toast } from "sonner";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, FormProvider } from "react-hook-form";
 
-import { formSchema } from "@libs/schema";
+import { SignupFormSchema } from "@libs/schema";
 
-import useFormHook from "@hooks/useFormValidation";
+import { registerUserAction }
+  from "@utils/data/actions/auth-actions";
 
+import Link from "@components/ui/Link";
 import Button from "@components/ui/Button";
 
 import {
@@ -24,21 +32,51 @@ const defaultValues = {
   password: "",
 };
 
-const Sales = function Sales() {
+const INITIAL_STATE = {
+  data: null,
+  errors: null,
+  message: null,
+};
+
+const convertToFormData = (data) => {
+  const formData = new FormData();
+  Object.keys(data).forEach(key => formData.append(key, data[key]));
+  return formData;
+};
+
+function RegisterForm() {
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(SignupFormSchema),
     defaultValues,
   });
 
-  const {
-    loading,
-    submissionError,
-    onSubmit
-  } = useFormHook(form);
+  const { handleSubmit, setError, reset } = form;
+
+  const [formState, formAction] = useFormState(
+    registerUserAction,
+    INITIAL_STATE
+  );
+
+  const onSubmit = async (data) => {
+    const formData = convertToFormData(data);
+
+    formAction(formData);
+
+    if (formState?.errors) {
+      Object.entries(formState.errors).forEach(([key, value]) => {
+        setError(key, {
+          type: "server",
+          message: value
+        });
+      });
+    } else {
+      toast.success("Registration successful!");
+    }
+  };
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="username"
@@ -99,15 +137,11 @@ const Sales = function Sales() {
           )}
         />
 
-        {submissionError && (
-          <p className="text-red-500">{submissionError}</p>
-        )}
-
-        <Box className="flex items-center gap-4 pt-4">
+        <Box className="flex items-center gap-4 py-4">
           <Button
             type="button"
             variant="toned"
-            onClick={() => form.reset({ defaultValues })}
+            onClick={() => reset({ defaultValues })}
             className="w-full"
           >
             Reset
@@ -115,10 +149,11 @@ const Sales = function Sales() {
 
           <Button
             type="submit"
-            disabled={loading}
+            // disabled={loading}
             className="w-full"
           >
-            {loading ? "Submitting..." : "Submit"}
+            {/* {loading ? "Submitting..." : "Submit"} */}
+            Submit
           </Button>
         </Box>
       </form>
@@ -126,4 +161,4 @@ const Sales = function Sales() {
   );
 };
 
-export default Sales;
+export default RegisterForm;

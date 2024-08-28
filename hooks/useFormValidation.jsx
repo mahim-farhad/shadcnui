@@ -15,15 +15,13 @@ const useFormHook = (form) => {
     setSubmissionError("");
 
     try {
-      const res = await registerUser(
-        data?.username, data?.email,
-        data?.password
-      );
+      const res = await registerUser(data);
+
+      setSubmissionError("Registration Completed!");
 
       setTimeout(() => {
-        router.push("/success");
-      }, 2000);
-
+        router.push("/");
+      }, 1000);
     } catch (error) {
       const serverErrors = error?.data?.error || {};
 

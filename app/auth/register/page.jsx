@@ -3,8 +3,12 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-import SignupWithSA from "@components/forms/SignupWithSA";
-import Sales from "@components/forms/Sales";
+import SAFormWithCF from
+  "@components/server-action-form/custom/RegisterForm";
+import SAFormWithRHF from
+  "@components/server-action-form/react-hook-form/RegisterForm";
+import Sales from
+  "@components/react-hook-form/RegisterForm";
 
 function Register() {
   return (
@@ -27,6 +31,7 @@ function Register() {
               "sm:max-w-[500px] lg:max-w-[500px]",
               "gap-y-4",
               "p-6 sm:p-12 lg:p-16",
+              "my-8",
               "mx-auto",
               "bg-white",
               "border",
@@ -34,8 +39,43 @@ function Register() {
               "shadow-xl"
             ]}
           >
-            <SignupWithSA />
+            <SAFormWithCF />
+          </Box>
 
+          <Box
+            className={[
+              "flex",
+              "flex-col",
+              "justify-center",
+              "sm:max-w-[500px] lg:max-w-[500px]",
+              "gap-y-4",
+              "p-6 sm:p-12 lg:p-16",
+              "my-8",
+              "mx-auto",
+              "bg-white",
+              "border",
+              "rounded-xl",
+              "shadow-xl"
+            ]}
+          >
+            <SAFormWithRHF />
+          </Box>
+
+          <Box
+            className={[
+              "flex",
+              "flex-col",
+              "justify-center",
+              "sm:max-w-[500px] lg:max-w-[500px]",
+              "gap-y-4",
+              "p-6 sm:p-12 lg:p-16",
+              "mx-auto",
+              "bg-white",
+              "border",
+              "rounded-xl",
+              "shadow-xl"
+            ]}
+          >
             <Sales />
           </Box>
         </Container>

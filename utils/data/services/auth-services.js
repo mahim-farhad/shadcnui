@@ -18,15 +18,7 @@ async function registerUserService(userData) {
       ...userData
     });
 
-    if (res.status >= 200 && res.status < 300) {
-      return res.data;
-    } else if (res.status >= 400 && res.status < 500) {
-      throw new Error(res.data.message || "Client error occurred");
-    } else if (res.status >= 500) {
-      throw new Error("Server error occurred");
-    } else {
-      throw new Error("Failed to register user");
-    }
+    return res.data;
   } catch (error) {
     throw error.response ||
     new Error("An error occurred during registration");
@@ -40,15 +32,7 @@ async function loginUserService(userData) {
       ...userData
     });
 
-    if (res.status >= 200 && res.status < 300) {
-      return res.data;
-    } else if (res.status >= 400 && res.status < 500) {
-      throw new Error(res.data.message || "Client error occurred");
-    } else if (res.status >= 500) {
-      throw new Error("Server error occurred");
-    } else {
-      throw new Error("Failed to login user");
-    }
+    return res.data;
   } catch (error) {
     throw error.response ||
     new Error("An error occurred during authentication");
