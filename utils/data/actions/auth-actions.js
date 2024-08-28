@@ -44,7 +44,7 @@ async function registerUserAction(prevState, formData) {
     };
 
     const updatedServerErrors = {
-      usernme: "",
+      username: "",
       email: ""
     };
 
