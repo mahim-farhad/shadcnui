@@ -23,7 +23,7 @@ function Register() {
         ]}
       >
         <Container>
-          <Box
+          {/* <Box
             className={[
               "flex",
               "flex-col",
@@ -40,7 +40,7 @@ function Register() {
             ]}
           >
             <SAFormWithCF />
-          </Box>
+          </Box> */}
 
           <Box
             className={[
@@ -61,7 +61,7 @@ function Register() {
             <SAFormWithRHF />
           </Box>
 
-          <Box
+          {/* <Box
             className={[
               "flex",
               "flex-col",
@@ -77,7 +77,7 @@ function Register() {
             ]}
           >
             <Sales />
-          </Box>
+          </Box> */}
         </Container>
       </Section>
     </Main>

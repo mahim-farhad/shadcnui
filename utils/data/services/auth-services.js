@@ -18,8 +18,11 @@ async function registerUserService(userData) {
       ...userData
     });
 
+
     return res.data;
   } catch (error) {
+    console.log(error);
+
     throw error.response ||
     new Error("An error occurred during registration");
   }
