@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState, useActionState } from "react-dom";
 
 import { toast } from "sonner";
 
@@ -57,21 +57,23 @@ function RegisterForm() {
     INITIAL_STATE
   );
 
+  console.log(formState)
+
   const onSubmit = async (data) => {
     const formData = convertToFormData(data);
 
     formAction(formData);
 
-    if (formState?.errors) {
-      Object.entries(formState.errors).forEach(([key, value]) => {
-        setError(key, {
-          type: "server",
-          message: value
-        });
+    // if (formState?.errors) {
+    Object.entries(formState.errors).forEach(([key, value]) => {
+      setError(key, {
+        type: "server",
+        message: value
       });
-    } else {
-      toast.success("Registration successful!");
-    }
+    });
+    // } else {
+    //   toast.success("Registration successful!");
+    // }
   };
 
   return (

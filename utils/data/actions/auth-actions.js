@@ -39,6 +39,8 @@ async function registerUserAction(prevState, formData) {
 
     createSession(res.jwt);
   } catch (error) {
+    console.log(error)
+
     const serverErrors = error?.data?.error || {
       message: "Ops! Something went wrong. Please try again."
     };
