@@ -26,7 +26,7 @@ async function registerUserAction(prevState, formData) {
     return {
       ...prevState,
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Required Fields Can't be Empty"
+      message: null
     };
   }
 
@@ -38,9 +38,13 @@ async function registerUserAction(prevState, formData) {
     const res = await registerUserService(validatedFields.data);
 
     createSession(res.jwt);
-  } catch (error) {
-    console.log(error)
 
+    return {
+      ...prevState,
+      errors: null,
+      message: "Registration successful!",
+    };
+  } catch (error) {
     const serverErrors = error?.data?.error || {
       message: "Ops! Something went wrong. Please try again."
     };
@@ -64,11 +68,11 @@ async function registerUserAction(prevState, formData) {
     return {
       ...prevState,
       errors: updatedServerErrors,
-      message: serverErrors.message,
+      message: null,
     };
   }
 
-  redirect("/");
+  // redirect("/?success=Registration successful!");
 }
 
 async function loginUserAction(prevState, formData) {
@@ -112,6 +116,10 @@ async function loginUserAction(prevState, formData) {
       ...prevState,
       errors: updatedServerErrors,
       message: error.statusText,
+      issues: e.issues.map((issue) => ({
+        path: issue.path.join("."),
+        message: `Server validation: ${issue.message}`,
+      }))
     };
   }
 

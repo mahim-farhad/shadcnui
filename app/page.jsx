@@ -1,15 +1,7 @@
-// "use client";
-
-// import { useEffect } from "react";
-
-// import { useSearchParams } from "next/navigation";
-
-// import { toast } from "sonner";
-
 import { logoutUserAction } from
   "@utils/data/actions/auth-actions";
 
-import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
+// import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
 
 import Typography from "@components/ui/Typography";
 import Link from "@components/ui/Link";
@@ -20,21 +12,8 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-async function Home() {
-  // const searchParams = useSearchParams();
-  // const message = searchParams.get("message");
-
-  // useEffect(() => {
-  //   toast.error(message, {
-  //     position: 'top-center',
-  //   });
-
-  //   // window.history.replaceState(null, "", window.location.pathname);
-  // }, [message]);
-
-  const user = await getUserMeLoader();
-
-  console.log(user);
+function Home() {
+  // const user = await getUserMeLoader();
 
   return (
     <Main>

@@ -57,23 +57,29 @@ function RegisterForm() {
     INITIAL_STATE
   );
 
-  console.log(formState)
+  console.log(formState);
+
+  useEffect(() => {
+    if (formState?.errors && formState?.message) {
+      Object.entries(formState.errors).forEach(([key, value]) => {
+        setError(key, {
+          type: "server",
+          message: value
+        });
+      });
+    }
+
+    if (!formState?.errors && formState?.message) {
+      console.log(formState.message);
+
+      toast.error("Registration successful!");
+    }
+  }, [formState?.errors, setError]);
 
   const onSubmit = async (data) => {
     const formData = convertToFormData(data);
 
     formAction(formData);
-
-    // if (formState?.errors) {
-    Object.entries(formState.errors).forEach(([key, value]) => {
-      setError(key, {
-        type: "server",
-        message: value
-      });
-    });
-    // } else {
-    //   toast.success("Registration successful!");
-    // }
   };
 
   return (
@@ -151,7 +157,7 @@ function RegisterForm() {
 
           <Button
             type="submit"
-            // disabled={loading}
+            // disabled={formState?.errors}
             className="w-full"
           >
             {/* {loading ? "Submitting..." : "Submit"} */}
