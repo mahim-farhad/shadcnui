@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { useFormState, useActionState } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { toast } from "sonner";
 
@@ -15,7 +15,6 @@ import { SignupFormSchema } from "@libs/schema";
 import { registerUserAction }
   from "@utils/data/actions/auth-actions";
 
-import Link from "@components/ui/Link";
 import Button from "@components/ui/Button";
 
 import {
@@ -57,10 +56,11 @@ function RegisterForm() {
     INITIAL_STATE
   );
 
-  console.log(formState);
+  const [isPending, setPending] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    if (formState?.errors && formState?.message) {
+    if (formState?.errors) {
       Object.entries(formState.errors).forEach(([key, value]) => {
         setError(key, {
           type: "server",
@@ -69,16 +69,23 @@ function RegisterForm() {
       });
     }
 
-    if (!formState?.errors && formState?.message) {
-      console.log(formState.message);
-
-      toast.error("Registration successful!");
+    if (formState?.message) {
+      setSuccessMessage(formState.message);
     }
-  }, [formState?.errors, setError]);
+  }, [formState, setError]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage, {
+        position: 'top-center',
+      });
+
+      setSuccessMessage("");
+    }
+  }, [successMessage]);
 
   const onSubmit = async (data) => {
     const formData = convertToFormData(data);
-
     formAction(formData);
   };
 
@@ -157,11 +164,10 @@ function RegisterForm() {
 
           <Button
             type="submit"
-            // disabled={formState?.errors}
+            disabled={isPending}
             className="w-full"
           >
-            {/* {loading ? "Submitting..." : "Submit"} */}
-            Submit
+            {isPending ? "Submitting..." : "Submit"}
           </Button>
         </Box>
       </form>

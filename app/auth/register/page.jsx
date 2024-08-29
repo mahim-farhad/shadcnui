@@ -3,8 +3,6 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-import SAFormWithCF from
-  "@components/server-action-form/custom/RegisterForm";
 import SAFormWithRHF from
   "@components/server-action-form/react-hook-form/RegisterForm";
 import Sales from
@@ -23,25 +21,6 @@ function Register() {
         ]}
       >
         <Container>
-          <Box
-            className={[
-              "flex",
-              "flex-col",
-              "justify-center",
-              "sm:max-w-[500px] lg:max-w-[500px]",
-              "gap-y-4",
-              "p-6 sm:p-12 lg:p-16",
-              "my-8",
-              "mx-auto",
-              "bg-white",
-              "border",
-              "rounded-xl",
-              "shadow-xl"
-            ]}
-          >
-            <SAFormWithCF />
-          </Box>
-
           <Box
             className={[
               "flex",

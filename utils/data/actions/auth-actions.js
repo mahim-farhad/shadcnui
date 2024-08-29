@@ -25,8 +25,9 @@ async function registerUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
+      state: false,
       errors: validatedFields.error.flatten().fieldErrors,
-      message: null
+      message: "Required fileds must be filled!"
     };
   }
 
@@ -40,9 +41,9 @@ async function registerUserAction(prevState, formData) {
     createSession(res.jwt);
 
     return {
-      ...prevState,
       errors: null,
-      message: "Registration successful!",
+      state: true,
+      message: "Registered Successfully."
     };
   } catch (error) {
     const serverErrors = error?.data?.error || {
@@ -67,8 +68,9 @@ async function registerUserAction(prevState, formData) {
 
     return {
       ...prevState,
+      state: false,
       errors: updatedServerErrors,
-      message: null,
+      message: serverErrors.message
     };
   }
 
@@ -115,11 +117,7 @@ async function loginUserAction(prevState, formData) {
     return {
       ...prevState,
       errors: updatedServerErrors,
-      message: error.statusText,
-      issues: e.issues.map((issue) => ({
-        path: issue.path.join("."),
-        message: `Server validation: ${issue.message}`,
-      }))
+      message: error.statusText
     };
   }
 
