@@ -51,6 +51,8 @@ async function registerUserAction(prevState, formData) {
       message: "Ops! Something went wrong. Please try again."
     };
 
+    console.log(error)
+
     const updatedServerErrors = {
       username: "",
       email: ""
