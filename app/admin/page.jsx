@@ -1,5 +1,5 @@
 import { logoutUserAction } from
-  "@utils/data/actions/auth-actions";
+  "@utils/actions/auth-actions";
 
 import { getUserMeLoader } from "@utils/services/get-user-me-loader";
 
