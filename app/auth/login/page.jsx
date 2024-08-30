@@ -3,9 +3,6 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-import SigninWithSA from
-  "@components/server-action-form/custom/Login";
-
 function Login() {
   return (
     <Main>
@@ -34,7 +31,6 @@ function Login() {
               "shadow-xl"
             ]}
           >
-            <SigninWithSA />
           </Box>
         </Container>
       </Section>

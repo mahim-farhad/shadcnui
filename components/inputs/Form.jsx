@@ -192,7 +192,7 @@ const FormMessage = forwardRef(function FormMessage({ ...props }, ref) {
   if (!body) return null;
 
   return (
-    <Box className={clsx("absolute bottom-0")}>
+    <Box className={clsx("z-10 absolute bottom-0 w-full")}>
       <Typography
         ref={ref}
         id={formMessageId}
@@ -200,7 +200,7 @@ const FormMessage = forwardRef(function FormMessage({ ...props }, ref) {
           "py-1 px-4",
           "text-xs font-semibold uppercase",
           error
-            ? "text-error dark:text-error"
+            ? "text-error dark:text-error truncate"
             : "text-gray-400 dark:text-gray-300",
         )}
         {...props}
@@ -216,5 +216,6 @@ FormMessage.displayName = "FormMessage";
 export {
   FormField, FormItem, FormLabel,
   FormControl, FormIcon,
-  FormDescription, FormMessage,
+  FormDescription,
+  FormMessage,
 };

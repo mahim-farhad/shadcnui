@@ -25,7 +25,6 @@ async function registerUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
-      state: false,
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Required fileds must be filled!"
     };
@@ -42,7 +41,6 @@ async function registerUserAction(prevState, formData) {
 
     return {
       errors: null,
-      state: true,
       message: "Registered Successfully."
     };
   } catch (error) {
@@ -68,7 +66,6 @@ async function registerUserAction(prevState, formData) {
 
     return {
       ...prevState,
-      state: false,
       errors: updatedServerErrors,
       message: serverErrors.message
     };

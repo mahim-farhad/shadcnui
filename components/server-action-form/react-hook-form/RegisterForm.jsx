@@ -39,7 +39,11 @@ const INITIAL_STATE = {
 
 const convertToFormData = (data) => {
   const formData = new FormData();
-  Object.keys(data).forEach(key => formData.append(key, data[key]));
+
+  Object.keys(data).forEach(key => formData.append(
+    key, data[key]
+  ));
+
   return formData;
 };
 
@@ -85,7 +89,9 @@ function RegisterForm() {
   }, [successMessage]);
 
   const onSubmit = async (data) => {
-    const formData = convertToFormData(data);
+    const formData =
+      convertToFormData(data);
+
     formAction(formData);
   };
 
