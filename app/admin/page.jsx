@@ -1,7 +1,7 @@
 import { logoutUserAction } from
   "@utils/data/actions/auth-actions";
 
-import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
+import { getUserMeLoader } from "@utils/services/get-user-me-loader";
 
 import Typography from "@components/ui/Typography";
 import Link from "@components/ui/Link";

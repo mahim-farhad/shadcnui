@@ -13,7 +13,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { SignupFormSchema } from "@libs/schema";
 
 import { registerUserAction }
-  from "@utils/data/actions/auth-actions";
+  from "@utils/actions/auth-actions";
 
 import Button from "@components/ui/Button";
 
@@ -93,6 +93,8 @@ function RegisterForm() {
       convertToFormData(data);
 
     formAction(formData);
+
+    reset();
   };
 
   return (

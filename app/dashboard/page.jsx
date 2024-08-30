@@ -1,7 +1,7 @@
 "use client";
 
 import { logoutUserAction }
-  from "@utils/data/actions/auth-actions";
+  from "@utils/actions/auth-actions";
 
 import Typography from "@components/ui/Typography";
 import Link from "@components/ui/Link";

@@ -1,17 +1,6 @@
-import axios from "axios";
+import axiosInstance from "@utils/api/axios-instance";
 
-const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
-  timeout: 5000,
-  headers: {
-    "Content-type": "application/json",
-    "Authorization":
-      `Bearer ${process.env.NEXT_PUBLIC_BACKEND_API}`
-  },
-  next: { revalidate: 3600 }
-});
-
-async function registerUserService(userData) {
+async function registerUser(userData) {
   try {
     const res = await axiosInstance.post(
       "/auth/local/register", {
@@ -25,7 +14,7 @@ async function registerUserService(userData) {
   }
 };
 
-async function loginUserService(userData) {
+async function authenticateUser(userData) {
   try {
     const res = await axiosInstance.post(
       "/auth/local", {
@@ -39,7 +28,4 @@ async function loginUserService(userData) {
   }
 };
 
-export {
-  registerUserService,
-  loginUserService
-};
+export { registerUser, authenticateUser };

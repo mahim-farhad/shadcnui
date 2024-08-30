@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getUserMeLoader }
-  from "@utils/data/services/get-user-me-loader";
+  from "@utils/services/get-user-me-loader";
 
 export async function middleware(request) {
   const user = await getUserMeLoader();
@@ -24,9 +24,9 @@ export async function middleware(request) {
 
   if (currentPath.startsWith("/admin")) {
     if (user?.ok === false) {
-      const loginUrl = new URL('/auth/login', request.url);
+      const loginUrl = new URL("/auth/login", request.url);
 
-      loginUrl.searchParams.set('redirectTo', request.nextUrl.pathname);
+      loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
 
       return NextResponse.redirect(loginUrl);
     } else if (user?.data?.role?.type !== "admin") {
@@ -38,5 +38,8 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: [
+    "/dashboard/:path*",
+    "/admin/:path*",
+  ],
 };

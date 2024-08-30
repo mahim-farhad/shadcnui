@@ -1,4 +1,4 @@
-import { getAuthToken } from "./get-token";
+import getAuthToken from "@utils/services/auth-token";
 
 export async function getUserMeLoader() {
   const authToken = await getAuthToken();

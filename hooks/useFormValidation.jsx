@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 import { useRouter } from "next/navigation";
 
-import registerUser from "@api/registerApi";
+import { registerUser } from "@api/auth-services";
 
 const useFormHook = (form) => {
   const router = useRouter();

@@ -6,21 +6,22 @@ import { redirect } from "next/navigation";
 import bcrypt from 'bcrypt';
 
 import { createSession } from "@libs/session";
-
 import {
   SignupFormSchema,
   SigninFormSchema
 } from "@libs/schema";
 
 import {
-  registerUserService,
-  loginUserService
-} from "@utils/data/services/auth-services";
+  registerUser,
+  loginUser
+} from "@api/auth-services";
 
 async function registerUserAction(prevState, formData) {
-  const data = Object.fromEntries(formData.entries());
+  const data =
+    Object.fromEntries(formData.entries());
 
-  const validatedFields = SignupFormSchema.safeParse(data);
+  const validatedFields =
+    SignupFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -35,11 +36,13 @@ async function registerUserAction(prevState, formData) {
   // const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const res = await registerUserService(validatedFields.data);
+    const res =
+      await registerUser(validatedFields.data);
 
     createSession(res.jwt);
 
     return {
+      ...prevState,
       errors: null,
       message: "Registered Successfully."
     };
@@ -64,10 +67,20 @@ async function registerUserAction(prevState, formData) {
       serverErrors.message = "";
     }
 
+    // if (serverErrors.status === 401) {
+    //   serverErrors.message = "Unauthorized access. Please login.";
+    // } else if (serverErrors.status === 404) {
+    //   serverErrors.message = "Resource not found. Please try again later.";
+    // } else if (serverErrors.status === 500) {
+    //   serverErrors.message = "Internal server error. Please try again later.";
+    // } else if (serverErrors.status === 400) {
+    //   serverErrors.message = "Bad request. Please check your input.";
+    // }
+
     return {
       ...prevState,
       errors: updatedServerErrors,
-      message: serverErrors.message
+      message: serverErrors.statusText
     };
   }
 
@@ -93,7 +106,7 @@ async function loginUserAction(prevState, formData) {
   // const { identifier, password } = validatedFields.data;
 
   try {
-    const res = await loginUserService(validatedFields.data);
+    const res = await loginUser(validatedFields.data);
 
     createSession(res.jwt);
   } catch (error) {

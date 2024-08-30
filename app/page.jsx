@@ -1,5 +1,4 @@
-import { logoutUserAction } from
-  "@utils/data/actions/auth-actions";
+import { logoutUserAction } from "@utils/actions/auth-actions";
 
 // import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
 
