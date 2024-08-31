@@ -93,8 +93,6 @@ function RegisterForm() {
       convertToFormData(data);
 
     formAction(formData);
-
-    reset();
   };
 
   return (
