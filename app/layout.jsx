@@ -7,6 +7,7 @@ import "@styles/globals.css";
 import ThemeProvider from "@components/ThemeProvider";
 
 import { Toaster } from "@components/ui/Sonner";
+import TopNav from "@components/navigations/Navbar";
 
 export const metadata = {
   title: "React Shadcn Components",
@@ -32,6 +33,8 @@ function RootLayout({ children }) {
           defaultTheme="system"
           enableSystem={true}
         >
+          <TopNav />
+
           {children}
 
           <Toaster />

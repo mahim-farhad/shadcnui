@@ -41,17 +41,15 @@ async function registerUserAction(prevState, formData) {
 
     createSession(res.jwt);
 
-    return {
-      ...prevState,
-      errors: null,
-      message: "Registered Successfully."
-    };
+    // return {
+    //   ...prevState,
+    //   errors: null,
+    //   message: "Registered Successfully."
+    // };
   } catch (error) {
     const serverErrors = error?.data?.error || {
       message: "Ops! Something went wrong. Please try again."
     };
-
-    console.log(error)
 
     const updatedServerErrors = {
       username: "",
@@ -86,7 +84,7 @@ async function registerUserAction(prevState, formData) {
     };
   }
 
-  // redirect("/?success=Registration successful!");
+  redirect("/?success=Registration successful!");
 }
 
 async function loginUserAction(prevState, formData) {

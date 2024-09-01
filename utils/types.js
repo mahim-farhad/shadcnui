@@ -48,6 +48,8 @@ const buttonTypes = {
     "outline": true
   },
   colors: {
+    "white": true,
+    "black": true,
     "primary": true,
     "secondary": true,
     "info": true,

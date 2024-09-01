@@ -1,4 +1,4 @@
-import { Poppins, Montserrat, Fira_Code } from "next/font/google";
+import { Poppins, Roboto_Condensed, Fira_Code } from "next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,7 +16,7 @@ const poppins = Poppins({
   variable: "--font-poppins"
 });
 
-const montserrat = Montserrat({
+const montserrat = Roboto_Condensed({
   subsets: ["latin"],
   weight: [
     "100",

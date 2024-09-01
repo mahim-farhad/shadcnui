@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import axiosInstance from './axios-instance';
+import axiosInstance from '@utils/api/axios-instance';
 
 import getAuthToken from '@utils/services/auth-token';
 
@@ -12,7 +12,7 @@ axios.interceptors.request.use(async function (config) {
   if (authToken) {
     config.headers.Authorization = `Bearer ${authToken}`;
   } else {
-    new Error("No token found, request might fail.");
+    return Promise.reject(new Error("No token found, request might fail."));
   }
 
   return config;
@@ -30,7 +30,7 @@ axios.interceptors.response.use(function (response) {
       // Handle unauthorized access, e.g., redirect to login
     }
   } else {
-    console.error("Axios error without response:", error);
+    return Promise.reject(new Error("Axios error without response:", error));
   }
 
   return Promise.reject(error);

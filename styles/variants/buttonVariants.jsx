@@ -33,6 +33,16 @@ const getColorVariant = (variant, color) => {
         "active:shadow-lg",
         "active:shadow-primary-300",
       ],
+      black: [
+        "text-white",
+        "bg-black",
+        "border-transparent",
+        "shadow",
+        "shadow-black",
+        "hover:bg-primary-500",
+        "active:shadow-lg",
+        "active:shadow-black-300",
+      ],
     },
     gradient: {
       primary: [

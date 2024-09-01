@@ -18,7 +18,9 @@ function Grid({
       className={gridClasses}
       style={style}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }
 
