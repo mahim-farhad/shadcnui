@@ -1,22 +1,17 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import bcrypt from 'bcrypt';
 
+import { SignupFormSchema, SigninFormSchema } from "@libs/schema";
 import { createSession } from "@libs/session";
-import {
-  SignupFormSchema,
-  SigninFormSchema
-} from "@libs/schema";
 
-import {
-  registerUser,
-  loginUser
-} from "@api/auth-services";
+import { registerUser, loginUser } from "@api/auth";
 
-async function registerUserAction(prevState, formData) {
+export async function registerUserAction(prevState, formData) {
   const data =
     Object.fromEntries(formData.entries());
 
@@ -26,7 +21,8 @@ async function registerUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors:
+        validatedFields.error.flatten().fieldErrors,
       message: "Required fileds must be filled!"
     };
   }
@@ -40,15 +36,10 @@ async function registerUserAction(prevState, formData) {
       await registerUser(validatedFields.data);
 
     createSession(res.jwt);
-
-    // return {
-    //   ...prevState,
-    //   errors: null,
-    //   message: "Registered Successfully."
-    // };
   } catch (error) {
     const serverErrors = error?.data?.error || {
-      message: "Ops! Something went wrong. Please try again."
+      message:
+        "Something went wrong. Please try again."
     };
 
     const updatedServerErrors = {
@@ -84,10 +75,12 @@ async function registerUserAction(prevState, formData) {
     };
   }
 
-  redirect("/?success=Registration successful!");
+  revalidatePath("/");
+
+  redirect("/?success=registration-successful!");
 }
 
-async function loginUserAction(prevState, formData) {
+export async function loginUserAction(prevState, formData) {
   const validatedFields = SigninFormSchema.safeParse({
     identifier: formData.get("identifier"),
     password: formData.get("password"),
@@ -98,8 +91,10 @@ async function loginUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to Login.",
+      errors:
+        validatedFields.error.flatten().fieldErrors,
+      message:
+        "Missing Fields. Failed to Login.",
     };
   }
 
@@ -111,7 +106,8 @@ async function loginUserAction(prevState, formData) {
     createSession(res.jwt);
   } catch (error) {
     const serverErrors = error?.data?.error || {
-      message: "Ops! Something went wrong. Please try again."
+      message:
+        "Something went wrong. Please try again."
     };
 
     const updatedServerErrors = {};
@@ -131,17 +127,13 @@ async function loginUserAction(prevState, formData) {
     };
   }
 
+  revalidatePath("/");
+
   redirect(redirectTo);
 }
 
-async function logoutUserAction() {
+export async function logoutUserAction() {
   cookies().set("jwt", "", { maxAge: -1 });
 
   redirect("/auth/login");
 }
-
-export {
-  registerUserAction,
-  loginUserAction,
-  logoutUserAction
-};

@@ -1,22 +1,39 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import Typography from "@components/ui/Typography";
+import Button from "@components/ui/Button";
 
-export default function Error({ error, reset }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+import Main from "@components/layouts/Main";
+import Section from "@components/layouts/Section";
+import Container from "@components/layouts/Container";
+import Box from "@components/layouts/Box";
 
+function Error({ error, reset }) {
   return (
-    <main className="flex h-screen flex-col items-center justify-center">
-      <h2 className="text-center dark:text-black">Something went wrong!</h2>
-
-      <button
-        className="mt-4 rounded-md bg-primary px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
-        onClick={() => reset()}
+    <Main>
+      <Section
+        className={[
+          "flex",
+          "flex-col",
+          "justify-center",
+          "min-h-screen",
+          "p-4 sm:p-16",
+        ]}
       >
-        Try again
-      </button>
-    </main>
+        <Container>
+          <Box>
+            <Typography type="h4" className="dark:text-black">
+              {error.message}
+            </Typography>
+
+            <Button onClick={() => reset()}>
+              Try again
+            </Button>
+          </Box>
+        </Container>
+      </Section>
+    </Main>
   );
 }
+
+export default Error;

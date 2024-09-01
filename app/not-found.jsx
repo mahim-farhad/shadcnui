@@ -1,12 +1,12 @@
-import clsx from "clsx"
+import clsx from "clsx";
 
-import Typography from "@components/ui/Typography"
-import Button from "@components/ui/Button"
+import Typography from "@components/ui/Typography";
+import Button from "@components/ui/Button";
 
-import Main from "@components/layouts/Main"
-import Section from "@components/layouts/Section"
-import Container from "@components/layouts/Container"
-import Box from "@components/layouts/Box"
+import Main from "@components/layouts/Main";
+import Section from "@components/layouts/Section";
+import Container from "@components/layouts/Container";
+import Box from "@components/layouts/Box";
 
 function NotFound() {
   return (
@@ -30,8 +30,18 @@ function NotFound() {
             <Typography
               type="h1"
               className={clsx(
-                "mb-3",
-                "!text-8xl",
+                "text-[10rem]",
+                "opacity-25",
+              )}
+            >
+              ERROR
+            </Typography>
+
+            <Typography
+              type="h1"
+              className={clsx(
+                "-mt-32",
+                "!text-[7rem]",
                 "tracking-widest",
               )}
             >
@@ -55,7 +65,7 @@ function NotFound() {
         </Container>
       </Section>
     </Main>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

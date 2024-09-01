@@ -1,19 +1,16 @@
-import { logoutUserAction } from
-  "@utils/actions/auth-actions";
+import { Suspense } from "react";
 
-import { getUserMeLoader } from "@utils/services/get-user-me-loader";
-
-import Typography from "@components/ui/Typography";
-import Link from "@components/ui/Link";
-import Button from "@components/ui/Button";
+// import { getUserMeLoader } from "@utils/data/services/get-user-me-loader";
 
 import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-async function Admin() {
-  const user = await getUserMeLoader();
+import UserTable from "@app/_components/UserTable";
+
+async function Dashbaord() {
+  // const user = await getUserMeLoader();
 
   return (
     <Main>
@@ -27,38 +24,16 @@ async function Admin() {
         ]}
       >
         <Container>
-          <Box
-            className={[
-              "flex",
-              "flex-col",
-              "justify-center",
-              "sm:max-w-[500px] lg:max-w-[500px]",
-              "gap-y-4",
-              "p-6 sm:p-12 lg:p-16",
-              "mx-auto",
-              "bg-white",
-              "border",
-              "rounded-xl",
-              "shadow-xl"
-            ]}
-          >
-            <Typography type="h4" className="font-sans text-black dark:text-black">
-              Welcome to the Admin Page
-            </Typography>
-
-            <form action={logoutUserAction}>
-              <Button type="submit">
-                Logout
-              </Button>
-            </form>
-
-            <Link
-              href="/dashboard"
-              transition
-              className="font-medium dark:text-gray-600"
+          <Box className="bg-gray-800 p-8">
+            <Suspense
+              fallback={
+                <div className="animate-pulse rounded-md bg-primary/10">
+                  <p>Loading feed...</p>
+                </div>
+              }
             >
-              Go to <span className="dark:text-primary">dashboard</span>
-            </Link>
+              <UserTable />
+            </Suspense>
           </Box>
         </Container>
       </Section>
@@ -66,4 +41,4 @@ async function Admin() {
   );
 }
 
-export default Admin;
+export default Dashbaord;

@@ -1,13 +1,14 @@
-import { getUsers } from "@api/users-services";
+import { getUsers } from "@api/users";
 
+import Button from "@components/ui/Button";
+import Icon from "@components/ui/Icon";
 import {
   Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableHead,
+  TableBody,
   TableRow,
+  TableCell
 } from "@components/ui/Table";
 
 async function UserTable() {
@@ -15,19 +16,15 @@ async function UserTable() {
 
   return (
     <Table>
-      {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-
       <TableHeader>
         <TableRow>
           <TableHead>ID</TableHead>
           <TableHead>Username</TableHead>
           <TableHead>Email</TableHead>
           <TableHead className="text-right">Confirmation</TableHead>
-          <TableHead className="text-right">Provider</TableHead>
           <TableHead className="text-right">Blocked</TableHead>
-          <TableHead className="text-right">Created At</TableHead>
-          <TableHead className="text-right">Updated At</TableHead>
           <TableHead className="text-right">Role Type</TableHead>
+          <TableHead className="text-right">Edit</TableHead>
         </TableRow>
       </TableHeader>
 
@@ -38,14 +35,18 @@ async function UserTable() {
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell className="text-right">{user.confirmed ? 'Yes' : 'No'}</TableCell>
-            <TableCell className="text-right">{user.provider}</TableCell>
             <TableCell className="text-right">{user.blocked ? 'Yes' : 'No'}</TableCell>
-            <TableCell className="text-right">{new Date(user.createdAt).toLocaleString()}</TableCell>
-            <TableCell className="text-right">{new Date(user.updatedAt).toLocaleString()}</TableCell>
-            <TableCell className="text-right">{user.role.type}</TableCell>
+            <TableCell className="text-right">{user?.role?.type}</TableCell>
+            <TableCell className="text-right">
+              <Button
+                type="submit"
+                variant="text" iconOnly
+              >
+                <Icon name="Pencil" />
+              </Button>
+            </TableCell>
           </TableRow>
         ))}
-
       </TableBody>
     </Table>
   );

@@ -6,4 +6,8 @@ const classNames = (...classNames) => {
   return twMerge(clsx(classNames)) || undefined;
 }
 
-export { classNames };
+async function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export { classNames, delay };
