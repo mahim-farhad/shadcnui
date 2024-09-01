@@ -38,8 +38,8 @@ async function UserTable() {
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell className="text-right">{user.confirmed ? 'Yes' : 'No'}</TableCell>
-            <TableCell className="text-right">{user.blocked ? 'Yes' : 'No'}</TableCell>
             <TableCell className="text-right">{user.provider}</TableCell>
+            <TableCell className="text-right">{user.blocked ? 'Yes' : 'No'}</TableCell>
             <TableCell className="text-right">{new Date(user.createdAt).toLocaleString()}</TableCell>
             <TableCell className="text-right">{new Date(user.updatedAt).toLocaleString()}</TableCell>
             <TableCell className="text-right">{user.role.type}</TableCell>

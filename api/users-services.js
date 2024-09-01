@@ -16,14 +16,14 @@ async function getUser() {
 };
 
 async function getUsers() {
-  await delay(1999);
+  // await delay(1999);
 
   try {
     const res = await axiosSecure.get("/users?populate=*", {
-      headers: {
-        'cache': 'no-store',
-        revalidate: 3600
-      }
+      // headers: {
+      //   'cache': 'no-store',
+      //   revalidate: 3600
+      // }
     });
 
     return res.data;
