@@ -7,7 +7,7 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-import UserTable from "@app/admin/_components/UserTable";
+// import UserTable from "@app/admin/_components/UserTable";
 
 async function Dashbaord() {
   // const user = await getUserMeLoader();
@@ -24,7 +24,7 @@ async function Dashbaord() {
         ]}
       >
         <Container>
-          <Box className="bg-gray-800 p-8">
+          {/* <Box className="bg-gray-800 p-8">
             <Suspense
               fallback={
                 <div className="animate-pulse rounded-md bg-primary/10">
@@ -34,7 +34,7 @@ async function Dashbaord() {
             >
               <UserTable />
             </Suspense>
-          </Box>
+          </Box> */}
         </Container>
       </Section>
     </Main>

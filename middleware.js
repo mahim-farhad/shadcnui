@@ -14,14 +14,6 @@ export async function middleware(request) {
     }
   }
 
-  if (currentPath.startsWith("/dashboard")) {
-    if (user?.ok === false) {
-      return NextResponse.redirect(new URL("/not-found", request.url));
-    } else if (user?.data?.role?.type !== "admin") {
-      return NextResponse.redirect(new URL("/not-found", request.url));
-    }
-  }
-
   if (currentPath.startsWith("/admin")) {
     if (user?.ok === false) {
       const loginUrl = new URL("/auth/login", request.url);
@@ -39,7 +31,6 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    "/dashboard/:path*",
     "/admin/:path*",
   ],
 };
