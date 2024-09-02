@@ -6,8 +6,6 @@ export async function createSession(jwt) {
   const expiresAt =
     new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  console.log(process.env.NEXT_PUBLIC_DOMAIN_URL)
-
   const config = {
     expires: expiresAt,
     httpOnly: true,
