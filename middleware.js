@@ -6,17 +6,24 @@ import { getUserMeLoader }
 export async function middleware(request) {
   const user = await getUserMeLoader();
 
-  const currentPath = request.nextUrl.pathname;
+  const currentPath =
+    request.nextUrl.pathname;
 
   if (currentPath.startsWith("/auth")) {
     if (user?.ok === true) {
-      return NextResponse.redirect(new URL("/not-found", request.url));
+      return NextResponse.redirect(
+        new URL(
+          "/not-found",
+          request.url
+        )
+      );
     }
   }
 
   if (currentPath.startsWith("/admin")) {
     if (user?.ok === false) {
-      const loginUrl = new URL("/auth/login", request.url);
+      const loginUrl =
+        new URL("/auth/login", request.url);
 
       loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
 
@@ -31,6 +38,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
+    "/auth/:path*",
     "/admin/:path*",
   ],
 };

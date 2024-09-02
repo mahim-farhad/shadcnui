@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, FormProvider } from "react-hook-form";
 
-import { SignupFormSchema } from "@libs/schema";
+import { SignupFormSchema } from "@libs/zodValidations";
 
 import { registerUserAction }
   from "@utils/actions/auth-actions";

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { ProductFormSchema } from "@libs/schema";
+import { ProductFormSchema } from "@libs/zodValidations";
 
 import { createProduct } from "@api/products";
 

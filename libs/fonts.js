@@ -13,7 +13,8 @@ const poppins = Poppins({
     "800",
     "900"
   ],
-  variable: "--font-poppins"
+  variable: "--font-poppins",
+  display: "swap"
 });
 
 const montserrat = Roboto_Condensed({
@@ -29,7 +30,8 @@ const montserrat = Roboto_Condensed({
     "800",
     "900"
   ],
-  variable: "--font-montserrat"
+  variable: "--font-montserrat",
+  display: "swap"
 });
 
 const firaCode = Fira_Code({
@@ -41,7 +43,8 @@ const firaCode = Fira_Code({
     "600",
     "700"
   ],
-  variable: "--font-firaCode"
+  variable: "--font-firaCode",
+  display: "swap"
 });
 
 export { poppins, montserrat, firaCode };

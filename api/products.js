@@ -1,4 +1,4 @@
-import axiosSecure from "@libs/axiosSecure";
+import axiosSecure from "@libs/axios/axiosSecure";
 
 export async function createProduct(productData) {
   try {
@@ -8,45 +8,66 @@ export async function createProduct(productData) {
 
     return res.data;
   } catch (error) {
-    const status = error.response?.status;
-    const message = error.response?.data?.message || error.message;
+    if (error.response) {
+      const message =
+        error.response?.data?.message ||
+        error.message;
 
-    throw new Error(message);
+      throw new Error(message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
   }
 };
 
 export async function getProduct(productId) {
   try {
-    const res = await axiosSecure.get(`/products/${productId}?populate=*`, {
-      headers: { cache: 'no-store' }
+    const res = await axiosSecure.get(
+      `/products/${productId}?populate=*`, {
+      headers: { cache: "no-store" }
     });
 
     return res.data;
   } catch (error) {
-    const status = error.response?.status;
-    const message = error.response?.data?.message || error.message;
+    if (error.response) {
+      const message =
+        error.response?.data?.message ||
+        error.message;
 
-    throw new Error(message);
+      throw new Error(message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
   }
 };
 
 export async function getProducts(page = 1, pageSize = 25) {
   try {
-    const res = await axiosSecure.get(`/products`, {
+    const res = await axiosSecure.get(
+      `/products?populate=*`, {
+      headers: { cache: "no-store" },
       params: {
-        'pagination[page]': page,
-        'pagination[pageSize]': pageSize
+        "pagination[page]": page,
+        "pagination[pageSize]": pageSize
       }
     });
 
     return res.data;
   } catch (error) {
     if (error.response) {
-      console.log(error.response.headers);
+      const message =
+        error.response?.data?.message ||
+        error.message;
+
+      throw new Error(message);
     } else if (error.request) {
-      console.log(error.request);
+      throw new Error(error.request);
     } else {
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
 };

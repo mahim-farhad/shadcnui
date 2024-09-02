@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, FormProvider } from "react-hook-form";
 
-import { ProductFormSchema } from "@libs/schema";
+import { ProductFormSchema } from "@libs/zodValidations";
 
 import { createProductAction }
   from "@utils/actions/product-actions";

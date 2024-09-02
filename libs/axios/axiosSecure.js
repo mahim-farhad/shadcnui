@@ -1,4 +1,4 @@
-import axiosInstance from "@libs/axiosInstance";
+import axiosInstance from "@libs/axios/axiosInstance";
 
 import getAuthToken from '@utils/services/auth-token';
 
@@ -20,21 +20,9 @@ axiosSecure.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   if (error.response) {
-    const status = error.response.status;
-
-    console.log(error);
-
-    // if (status === 401 || status === 403) {
-    //   console.log(`Authorization error: ${status}. Redirecting to login...`);
-
-    //   return Promise.reject(new Error(
-    //     `Authorization error: ${status}. Redirecting to login...`
-    //   ));
-    // } else {
-    //   return Promise.reject(new Error(
-    //     `Authorization error: ${status}. Redirecting to login...`
-    //   ));
-    // }
+    return Promise.reject(new Error(
+      `${error.response}.`
+    ));
   } else {
     return Promise.reject(new Error("Axios error without response"));
   }

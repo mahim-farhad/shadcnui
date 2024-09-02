@@ -1,6 +1,6 @@
-import axiosInstance from "@libs/axiosInstance";
+import axiosInstance from "@libs/axios/axiosInstance";
 
-export const revalidatePage = async (path) => {
+export async function revalidatePage(path) {
   try {
     const res =
       await axiosInstance.post("/revalidate", {
@@ -9,11 +9,21 @@ export const revalidatePage = async (path) => {
 
     return res.data;
   } catch (error) {
-    throw error;
+    if (error.response) {
+      const message =
+        error.response?.data?.message ||
+        error.message;
+
+      throw new Error(message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
   }
 };
 
-export const revalidatePages = async (paths) => {
+export async function revalidatePages(paths) {
   try {
     const promises =
       paths.map((path) => revalidatePage(path));
@@ -22,6 +32,16 @@ export const revalidatePages = async (paths) => {
 
     return results;
   } catch (error) {
-    throw error;
+    if (error.response) {
+      const message =
+        error.response?.data?.message ||
+        error.message;
+
+      throw new Error(message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
   }
 };

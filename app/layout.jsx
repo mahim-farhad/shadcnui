@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import "@styles/globals.css";
 
-import ThemeProvider from "@components/ThemeProvider";
+import ThemeProvider from "@libs/ThemeProvider";
 
 import { Toaster } from "@components/ui/Sonner";
 import TopNav from "@components/navigations/Navbar";

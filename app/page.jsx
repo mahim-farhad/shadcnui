@@ -17,7 +17,7 @@ async function Home() {
       >
         <Container>
           <Box>
-
+            {console.log("Turbo Console")}
           </Box>
         </Container>
       </Section>

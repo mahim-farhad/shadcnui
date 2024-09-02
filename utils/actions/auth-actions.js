@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 import bcrypt from 'bcrypt';
 
-import { SignupFormSchema, SigninFormSchema } from "@libs/schema";
+import { SignupFormSchema, SigninFormSchema } from "@libs/zodValidations";
 import { createSession } from "@libs/session";
 
 import { registerUser, authenticateUser } from "@api/auth";
@@ -27,13 +27,14 @@ export async function registerUserAction(prevState, formData) {
     };
   }
 
-  // const { username, email, password } = validatedFields.data;
+  const { password } = validatedFields.data;
 
-  // const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const res =
-      await registerUser(validatedFields.data);
+    const res = await registerUser(validatedFields.data);
+
+    console.log(res)
 
     createSession(res.jwt);
   } catch (error) {
@@ -86,7 +87,7 @@ export async function loginUserAction(prevState, formData) {
     password: formData.get("password"),
   });
 
-  const redirectTo = formData.get("redirectTo") || "/";
+  // const redirectTo = formData.get("redirectTo") || "/";
 
   if (!validatedFields.success) {
     return {
@@ -98,13 +99,12 @@ export async function loginUserAction(prevState, formData) {
     };
   }
 
-  // const { identifier, password } = validatedFields.data;
-
   try {
     const res = await authenticateUser(validatedFields.data);
 
     createSession(res.jwt);
   } catch (error) {
+
     const serverErrors = error?.data?.error || {
       message:
         "Something went wrong. Please try again."
@@ -116,20 +116,18 @@ export async function loginUserAction(prevState, formData) {
       updatedServerErrors.identifier = serverErrors.message;
     } else if (serverErrors.message.includes("password")) {
       updatedServerErrors.password = serverErrors.message;
-    } else {
-      serverErrors.message = "";
     }
+
+    console.log(updatedServerErrors);
 
     return {
       ...prevState,
       errors: updatedServerErrors,
-      message: error.statusText
+      message: "Something went wrong. Please try again."
     };
   }
 
-  revalidatePath("/");
-
-  redirect(redirectTo);
+  // redirect(redirectTo);
 }
 
 export async function logoutUserAction() {

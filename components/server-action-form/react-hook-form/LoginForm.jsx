@@ -2,18 +2,32 @@
 
 import { useEffect, useState } from "react";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 
 import { toast } from "sonner";
 
-import { loginUserAction }
-  from "@utils/actions/auth-actions";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useForm, FormProvider } from "react-hook-form";
+
+import { SigninFormSchema } from "@libs/zodValidations";
+
+import { loginUserAction } from "@utils/actions/auth-actions";
 
 import Button from "@components/ui/Button";
 
+import {
+  FormField, FormItem,
+  FormLabel, FormControl, FormIcon,
+  FormMessage,
+} from "@components/inputs/Form";
+
 import Box from "@components/layouts/Box";
-import Textfield from "@components/inputs/Textfield";
-import Link from "@components/ui/Link";
+
+const defaultValues = {
+  identifier: "",
+  password: "",
+};
 
 const INITIAL_STATE = {
   data: null,
@@ -21,21 +35,48 @@ const INITIAL_STATE = {
   message: null,
 };
 
+const convertToFormData = (data) => {
+  const formData = new FormData();
+
+  Object.keys(data).forEach(key => formData.append(
+    key, data[key]
+  ));
+
+  return formData;
+};
+
 function LoginForm() {
+  const form = useForm({
+    resolver: zodResolver(SigninFormSchema),
+    defaultValues,
+  });
+
+  const { handleSubmit, setError, reset } = form;
+
   const [formState, formAction] = useFormState(
     loginUserAction,
     INITIAL_STATE
   );
 
-  const { pending } = useFormStatus();
+  console.log(formState)
 
+  const [isPending, setPending] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
+    if (formState?.errors) {
+      Object.entries(formState.errors).forEach(([key, value]) => {
+        setError(key, {
+          type: "server",
+          message: value
+        });
+      });
+    }
+
     if (formState?.message) {
       setSuccessMessage(formState.message);
     }
-  }, [formState]);
+  }, [formState, setError]);
 
   useEffect(() => {
     if (successMessage) {
@@ -47,50 +88,76 @@ function LoginForm() {
     }
   }, [successMessage]);
 
+  const onSubmit = async (data) => {
+    const formData =
+      convertToFormData(data);
+
+    formAction(formData);
+  };
+
   return (
-    <form
-      action={formAction}
-      method="post"
-      className="space-y-8"
-    >
-      {/* <input type="hidden" name="redirectTo" value={redirectTo} /> */}
+    <FormProvider {...form}>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="identifier"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Identifier</FormLabel>
 
-      <Textfield
-        type="text"
-        name="identifier"
-        label="Email or Username"
-        placeholder="Enter your mail or username"
-        isRequired
-        error={formState?.errors?.identifier}
-      />
+              <FormControl
+                type="identifier"
+                placeholder="Identifier"
+                {...field}
+              />
 
-      <Textfield
-        type="password"
-        name="password"
-        label="Password"
-        placeholder="Enter your password"
-        isRequired
-        error={formState?.errors?.password}
-      />
+              <FormIcon name="Mail" />
 
-      <Box className="flex items-center gap-4 py-4">
-        <Button
-          type="submit"
-          disabled={pending}
-          className="w-full"
-        >
-          {pending ? "Submitting..." : "Login"}
-        </Button>
-      </Box>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Link
-        href="/auth/register"
-        transition
-        className="text-center font-medium dark:text-gray-600"
-      >
-        Already a user? <span className="dark:text-primary">Signup</span>
-      </Link>
-    </form>
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+
+              <FormControl
+                type="password"
+                placeholder="Password"
+                {...field}
+              />
+
+              <FormIcon name="Lock" />
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Box className="flex items-center gap-4 py-4">
+          <Button
+            type="button"
+            variant="toned"
+            onClick={() => reset({ defaultValues })}
+            className="w-full"
+          >
+            Reset
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full"
+          >
+            {isPending ? "Submitting..." : "Submit"}
+          </Button>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
 
