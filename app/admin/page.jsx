@@ -7,7 +7,7 @@ import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
-import UserTable from "@app/_components/UserTable";
+import UserTable from "@app/admin/_components/UserTable";
 
 async function Dashbaord() {
   // const user = await getUserMeLoader();

@@ -32,3 +32,13 @@ export const SigninFormSchema = z.object({
     message: "Password must be between 6 and 100 characters",
   }).trim(),
 });
+
+export const ProductFormSchema = z.object({
+  productTitle: z.string().min(2, {
+    message: 'Title must be at least 2 characters long.'
+  }).trim(),
+  // slug: z.string().trim(),
+  // productPrice: z.number().min(0, "Price must be greater than or equal to 0")
+  //   .positive("Price must be a positive number")
+  //   .finite("Price must be a finite number"),
+});

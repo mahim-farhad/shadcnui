@@ -1,13 +1,13 @@
-import { axiosInstance } from "@libs/axios";
+import axiosInstance from "@libs/axiosInstance";
 
 export const revalidatePage = async (path) => {
   try {
-    const response =
+    const res =
       await axiosInstance.post("/revalidate", {
         path
       });
 
-    return response.data;
+    return res.data;
   } catch (error) {
     throw error;
   }

@@ -4,9 +4,9 @@ import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
 
 import SAFormWithRHF from
-  "@components/server-action-form/react-hook-form/RegisterForm";
+  "@components/server-action-form/react-hook-form/ProductsForm";
 
-function Register() {
+function Product() {
   return (
     <Main>
       <Section
@@ -15,7 +15,7 @@ function Register() {
           "flex-col",
           "justify-center",
           "min-h-screen",
-          "p-4 sm:p-16",
+          "p-4 sm:p-16 bg-gray-800",
         ]}
       >
         <Container>
@@ -43,4 +43,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Product;

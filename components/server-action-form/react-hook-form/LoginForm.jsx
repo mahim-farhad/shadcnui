@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useFormState, useFormStatus } from "react-dom";
-
-// import { useSearchParams } from 'next/navigation';
 
 import { toast } from "sonner";
 
 import { loginUserAction }
-  from "@utils/data/actions/auth-actions";
+  from "@utils/actions/auth-actions";
 
-import Link from "@components/ui/Link";
-import Textfield from "@components/inputs/Textfield";
 import Button from "@components/ui/Button";
 
 import Box from "@components/layouts/Box";
+import Textfield from "@components/inputs/Textfield";
+import Link from "@components/ui/Link";
 
 const INITIAL_STATE = {
   data: null,
@@ -24,9 +22,6 @@ const INITIAL_STATE = {
 };
 
 function LoginForm() {
-  // const searchParams = useSearchParams();
-  // const redirectTo = searchParams.get('redirectTo') || '/';
-
   const [formState, formAction] = useFormState(
     loginUserAction,
     INITIAL_STATE
@@ -34,13 +29,23 @@ function LoginForm() {
 
   const { pending } = useFormStatus();
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   useEffect(() => {
     if (formState?.message) {
-      toast.error(formState?.message, {
+      setSuccessMessage(formState.message);
+    }
+  }, [formState]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage, {
         position: 'top-center',
       });
+
+      setSuccessMessage("");
     }
-  }, [formState?.message]);
+  }, [successMessage]);
 
   return (
     <form
@@ -84,14 +89,6 @@ function LoginForm() {
         className="text-center font-medium dark:text-gray-600"
       >
         Already a user? <span className="dark:text-primary">Signup</span>
-      </Link>
-
-      <Link
-        href="/admin"
-        transition
-        className="text-center font-medium dark:text-gray-600"
-      >
-        Go to <span className="dark:text-primary">admin</span>
       </Link>
     </form>
   );

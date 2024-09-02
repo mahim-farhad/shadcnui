@@ -9,7 +9,7 @@ import bcrypt from 'bcrypt';
 import { SignupFormSchema, SigninFormSchema } from "@libs/schema";
 import { createSession } from "@libs/session";
 
-import { registerUser, loginUser } from "@api/auth";
+import { registerUser, authenticateUser } from "@api/auth";
 
 export async function registerUserAction(prevState, formData) {
   const data =
@@ -101,7 +101,7 @@ export async function loginUserAction(prevState, formData) {
   // const { identifier, password } = validatedFields.data;
 
   try {
-    const res = await loginUser(validatedFields.data);
+    const res = await authenticateUser(validatedFields.data);
 
     createSession(res.jwt);
   } catch (error) {

@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 
-import { axiosSecure } from "@libs/axios";
+import axiosSecure from "@libs/axiosSecure";
 
 export async function getCurrentUser() {
   try {
@@ -36,7 +36,7 @@ export async function getUsers() {
       headers: { cache: 'no-store' }
     });
 
-    revalidatePath("/");
+    revalidatePath("/admin");
 
     return res.data;
   } catch (error) {

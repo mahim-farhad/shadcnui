@@ -2,6 +2,7 @@ import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
+import LoginForm from "@components/server-action-form/react-hook-form/LoginForm";
 
 function Login() {
   return (
@@ -31,6 +32,7 @@ function Login() {
               "shadow-xl"
             ]}
           >
+            <LoginForm />
           </Box>
         </Container>
       </Section>
