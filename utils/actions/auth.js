@@ -79,7 +79,7 @@ export async function registerUserAction(prevState, formData) {
 }
 
 export async function loginUserAction(prevState, formData) {
-  await delay(2000);
+  // await delay(2000);
 
   const validatedFields = SigninFormSchema.safeParse({
     identifier: formData.get("identifier"),
