@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, FormProvider } from "react-hook-form";
 
-import { ProductFormSchema } from "@libs/zodValidations";
+import { ProductZodSchema } from "@libs/zodValidations";
 
 import { createProductAction }
   from "@utils/actions/products";
@@ -49,7 +49,7 @@ const convertToFormData = (data) => {
 
 function ProductsForm() {
   const form = useForm({
-    resolver: zodResolver(ProductFormSchema),
+    resolver: zodResolver(ProductZodSchema),
     defaultValues,
   });
 

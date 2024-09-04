@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SignupFormSchema = z.object({
+export const registerZodSchema = z.object({
   username: z.string().min(2, {
     message: 'Name must be at least 2 characters long.'
   }).trim(),
@@ -20,7 +20,7 @@ export const SignupFormSchema = z.object({
   }),
 });
 
-export const SigninFormSchema = z.object({
+export const loginZodSchema = z.object({
   identifier: z.string().min(3, {
     message: "Identifier must have at least 3 or more characters",
   }).max(200, {
@@ -33,7 +33,7 @@ export const SigninFormSchema = z.object({
   }).trim(),
 });
 
-export const ProductFormSchema = z.object({
+export const ProductZodSchema = z.object({
   productTitle: z.string().min(2, {
     message: 'Title must be at least 2 characters long.'
   }).trim(),

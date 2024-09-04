@@ -2,42 +2,60 @@ import { useState, useCallback } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { registerUser } from "@api/auth";
+import { authenticateUser } from "@api/auth";
 
-const useFormHook = (form) => {
+const useFormHook = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [submissionError, setSubmissionError] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState("");
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setSubmissionError("");
+    setMessage("");
+    setErrors("");
 
     try {
-      const res = await registerUser(data);
+      const res = await authenticateUser(data);
 
-      setSubmissionError("Registration Completed!");
+      setMessage("Registerred Successfully");
 
       setTimeout(() => {
         router.push("/");
       }, 1000);
     } catch (error) {
-      const serverErrors = error?.data?.error || {};
+      let errorMessage = "";
 
-      if (serverErrors.message.includes("Email")) {
-        form.setError("email", {
-          type: "server",
-          message: serverErrors.message,
-        });
-      } else if (serverErrors.message.includes("Username")) {
-        form.setError("username", {
-          type: "server",
-          message: serverErrors.message,
-        });
+      const fieldErrors = {
+        identifier: "",
+        password: ""
+      };
+
+      if (error.response) {
+        const { status, data } = error.response;
+
+        if (status === 400 || status === 429) {
+          const serverErrorMessage =
+            data?.error?.message || errorMessage;
+
+          errorMessage = serverErrorMessage;
+
+          if (errorMessage.includes("identifier", "password")) {
+            fieldErrors.identifier = errorMessage;
+
+            fieldErrors.password = errorMessage;
+          }
+        } else {
+          errorMessage = data;
+        }
       } else {
-        setSubmissionError(serverErrors.message || "Something went wrong!");
+        errorMessage =
+          error.message || "Something went wrong. Please try again."
       }
+
+      setErrors(fieldErrors);
+      setMessage(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -45,7 +63,8 @@ const useFormHook = (form) => {
 
   return {
     loading,
-    submissionError,
+    message,
+    errors,
     onSubmit
   };
 };

@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-import { useFormState } from "react-dom";
-
 import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +10,7 @@ import { useForm, FormProvider } from "react-hook-form";
 
 import { loginZodSchema } from "@libs/zodValidations";
 
-import { loginUserAction } from "@utils/actions/auth";
+import useFormHook from "@hooks/useFormValidation";
 
 import {
   FormField, FormItem,
@@ -21,7 +19,7 @@ import {
 } from "@components/inputs/Form";
 
 import Box from "@components/layouts/Box";
-import LoadingButton from "@components/ui/LoadingButton";
+import Button from "@components/ui/Button";
 
 const defaultValues = {
   identifier: "",
@@ -42,7 +40,7 @@ function LoginForm() {
   });
 
   const {
-    // handleSubmit,
+    handleSubmit,
     setError,
     trigger,
     formState: {
@@ -50,16 +48,18 @@ function LoginForm() {
     }
   } = form;
 
-  const [formState, formAction] = useFormState(
-    loginUserAction,
-    INITIAL_STATE
-  );
+  const {
+    loading,
+    message,
+    errors,
+    onSubmit
+  } = useFormHook(form);
 
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    if (formState?.errors) {
-      Object.entries(formState.errors).forEach(([key, value]) => {
+    if (errors?.errors) {
+      Object.entries(errors.errors).forEach(([key, value]) => {
         setError(key, {
           type: "server",
           message: value
@@ -67,10 +67,9 @@ function LoginForm() {
       });
     }
 
-    if (formState?.message)
-      setSuccessMessage(formState.message);
-
-  }, [formState, setError]);
+    if (message)
+      setSuccessMessage(message);
+  }, [errors, setError]);
 
   useEffect(() => {
     if (successMessage) {
@@ -82,18 +81,10 @@ function LoginForm() {
     }
   }, [successMessage]);
 
-  // const onSubmit = async (data) => {
-  //   const formData =
-  //     convertToFormData(data);
-
-  //   formAction(formData);
-  // };
-
   return (
     <FormProvider {...form}>
       <form
-        action={formAction}
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="space-y-4"
       >
         <FormField
@@ -139,11 +130,13 @@ function LoginForm() {
         />
 
         <Box className="flex items-center gap-4 py-4">
-          <LoadingButton
+          <Button
             type="submit"
             className="w-full"
-            disabled={!isValid}
-          />
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
         </Box>
       </form>
     </FormProvider>

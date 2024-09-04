@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 
 // import bcrypt from 'bcrypt';
 
-import { SignupFormSchema, SigninFormSchema } from "@libs/zodValidations";
+import { registerZodSchema, loginZodSchema } from "@libs/zodValidations";
 import { createSession, deleteSession } from "@libs/session";
 
 import { registerUser, authenticateUser } from "@api/auth";
+
 import { delay } from "@utils/utils";
 
 export async function registerUserAction(prevState, formData) {
@@ -15,7 +16,7 @@ export async function registerUserAction(prevState, formData) {
     Object.fromEntries(formData.entries());
 
   const validatedFields =
-    SignupFormSchema.safeParse(data);
+    registerZodSchema.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -79,9 +80,9 @@ export async function registerUserAction(prevState, formData) {
 }
 
 export async function loginUserAction(prevState, formData) {
-  // await delay(2000);
+  await delay(100);
 
-  const validatedFields = SigninFormSchema.safeParse({
+  const validatedFields = loginZodSchema.safeParse({
     identifier: formData.get("identifier"),
     password: formData.get("password"),
   });

@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, FormProvider } from "react-hook-form";
 
-import { SignupFormSchema } from "@libs/zodValidations";
+import { registerZodSchema } from "@libs/zodValidations";
 
 import { registerUserAction }
   from "@utils/actions/auth";
@@ -49,7 +49,7 @@ const convertToFormData = (data) => {
 
 function RegisterForm() {
   const form = useForm({
-    resolver: zodResolver(SignupFormSchema),
+    resolver: zodResolver(registerZodSchema),
     defaultValues,
   });
 

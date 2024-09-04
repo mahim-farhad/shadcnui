@@ -1,137 +1,137 @@
-"use client";
+// "use client";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useForm, FormProvider } from "react-hook-form";
+// import { useForm, FormProvider } from "react-hook-form";
 
-import { SignupFormSchema } from "@libs/schema";
+// import { SignupFormSchema } from "@libs/schema";
 
-import useFormHook from "@hooks/useFormValidation";
+// import useFormHook from "@hooks/useFormValidation";
 
-import Button from "@components/ui/Button";
+// import Button from "@components/ui/Button";
 
-import {
-  FormField, FormItem,
-  FormLabel, FormControl, FormIcon,
-  FormMessage,
-} from "@components/inputs/Form";
+// import {
+//   FormField, FormItem,
+//   FormLabel, FormControl, FormIcon,
+//   FormMessage,
+// } from "@components/inputs/Form";
 
-import Box from "@components/layouts/Box";
+// import Box from "@components/layouts/Box";
 
-const defaultValues = {
-  username: "",
-  email: "",
-  password: "",
-};
+// const defaultValues = {
+//   username: "",
+//   email: "",
+//   password: "",
+// };
 
-const Sales = function Sales() {
-  const form = useForm({
-    resolver: zodResolver(SignupFormSchema),
-    defaultValues,
-  });
+// const Sales = function Sales() {
+//   const form = useForm({
+//     resolver: zodResolver(SignupFormSchema),
+//     defaultValues,
+//   });
 
-  const {
-    loading,
-    submissionError,
-    onSubmit
-  } = useFormHook(form);
+//   const {
+//     loading,
+//     submissionError,
+//     onSubmit
+//   } = useFormHook(form);
 
-  useEffect(() => {
-    if (submissionError) {
-      toast.error(submissionError, {
-        position: 'top-center',
-      });
-    }
-  }, [submissionError]);
+//   useEffect(() => {
+//     if (submissionError) {
+//       toast.error(submissionError, {
+//         position: 'top-center',
+//       });
+//     }
+//   }, [submissionError]);
 
-  return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
+//   return (
+//     <FormProvider {...form}>
+//       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+//         <FormField
+//           control={form.control}
+//           name="username"
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormLabel>Username</FormLabel>
 
-              <FormControl
-                type="text"
-                placeholder="Username"
-                {...field}
-              />
+//               <FormControl
+//                 type="text"
+//                 placeholder="Username"
+//                 {...field}
+//               />
 
-              <FormIcon name="User" />
+//               <FormIcon name="User" />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
+//         <FormField
+//           control={form.control}
+//           name="email"
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormLabel>Email</FormLabel>
 
-              <FormControl
-                type="email"
-                placeholder="Email"
-                {...field}
-              />
+//               <FormControl
+//                 type="email"
+//                 placeholder="Email"
+//                 {...field}
+//               />
 
-              <FormIcon name="Mail" />
+//               <FormIcon name="Mail" />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
+//         <FormField
+//           control={form.control}
+//           name="password"
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormLabel>Password</FormLabel>
 
-              <FormControl
-                type="password"
-                placeholder="Password"
-                {...field}
-              />
+//               <FormControl
+//                 type="password"
+//                 placeholder="Password"
+//                 {...field}
+//               />
 
-              <FormIcon name="Lock" />
+//               <FormIcon name="Lock" />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
 
-        <Box className="flex items-center gap-4 py-4">
-          <Button
-            type="button"
-            variant="toned"
-            onClick={() => form.reset({ defaultValues })}
-            className="w-full"
-          >
-            Reset
-          </Button>
+//         <Box className="flex items-center gap-4 py-4">
+//           <Button
+//             type="button"
+//             variant="toned"
+//             onClick={() => form.reset({ defaultValues })}
+//             className="w-full"
+//           >
+//             Reset
+//           </Button>
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full"
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </Button>
-        </Box>
-      </form>
-    </FormProvider>
-  );
-};
+//           <Button
+//             type="submit"
+//             disabled={loading}
+//             className="w-full"
+//           >
+//             {loading ? "Submitting..." : "Submit"}
+//           </Button>
+//         </Box>
+//       </form>
+//     </FormProvider>
+//   );
+// };
 
-export default Sales;
+// export default Sales;
