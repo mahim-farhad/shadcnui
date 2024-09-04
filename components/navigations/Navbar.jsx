@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 
-import { logoutUserAction } from "@utils/actions/auth-actions";
+import { logoutUserAction } from "@utils/actions/auth";
 
 // import { useToggleSidebar } from "@contexts/SidebarProvider"
 

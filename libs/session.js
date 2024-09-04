@@ -17,3 +17,14 @@ export async function createSession(jwt) {
 
   cookies().set("jwt", jwt, config);
 }
+
+export async function deleteSession() {
+  cookies().set("jwt", "", {
+    maxAge: -1
+  });
+}
+
+/**
+ * For more details see
+ * https://nextjs.org/docs/app/building-your-application/authentication
+ */

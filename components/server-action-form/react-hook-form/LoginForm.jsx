@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useFormState } from "react-dom";
 
@@ -12,7 +12,7 @@ import { useForm, FormProvider } from "react-hook-form";
 
 import { SigninFormSchema } from "@libs/zodValidations";
 
-import { loginUserAction } from "@utils/actions/auth-actions";
+import { loginUserAction } from "@utils/actions/auth";
 
 import Button from "@components/ui/Button";
 
@@ -31,8 +31,8 @@ const defaultValues = {
 
 const INITIAL_STATE = {
   data: null,
-  errors: null,
   message: null,
+  errors: null
 };
 
 const convertToFormData = (data) => {
@@ -47,20 +47,24 @@ const convertToFormData = (data) => {
 
 function LoginForm() {
   const form = useForm({
+    mode: 'onBlur',
     resolver: zodResolver(SigninFormSchema),
     defaultValues,
   });
 
-  const { handleSubmit, setError, reset } = form;
+  const {
+    handleSubmit, setError,
+    reset, trigger,
+    formState: {
+      isSubmitting
+    }
+  } = form;
 
   const [formState, formAction] = useFormState(
     loginUserAction,
     INITIAL_STATE
   );
 
-  console.log(formState)
-
-  const [isPending, setPending] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
@@ -97,7 +101,10 @@ function LoginForm() {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="identifier"
@@ -109,6 +116,7 @@ function LoginForm() {
                 type="identifier"
                 placeholder="Identifier"
                 {...field}
+                onBlur={() => trigger("identifier")}
               />
 
               <FormIcon name="Mail" />
@@ -129,6 +137,7 @@ function LoginForm() {
                 type="password"
                 placeholder="Password"
                 {...field}
+                onBlur={() => trigger("password")}
               />
 
               <FormIcon name="Lock" />
@@ -140,7 +149,6 @@ function LoginForm() {
 
         <Box className="flex items-center gap-4 py-4">
           <Button
-            type="button"
             variant="toned"
             onClick={() => reset({ defaultValues })}
             className="w-full"
@@ -150,10 +158,9 @@ function LoginForm() {
 
           <Button
             type="submit"
-            disabled={isPending}
             className="w-full"
           >
-            {isPending ? "Submitting..." : "Submit"}
+            {isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         </Box>
       </form>

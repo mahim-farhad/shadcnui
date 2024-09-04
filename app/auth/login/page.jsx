@@ -2,7 +2,11 @@ import Main from "@components/layouts/Main";
 import Section from "@components/layouts/Section";
 import Container from "@components/layouts/Container";
 import Box from "@components/layouts/Box";
-import LoginForm from "@components/server-action-form/react-hook-form/LoginForm";
+
+import LoginCF from "@components/server-action-form/custom-form/LoginForm";
+
+import LoginRHF from
+  "@components/server-action-form/react-hook-form/LoginForm";
 
 function Login() {
   return (
@@ -25,6 +29,24 @@ function Login() {
               "sm:max-w-[500px] lg:max-w-[500px]",
               "gap-y-4",
               "p-6 sm:p-12 lg:p-16",
+              "mx-auto mb-8",
+              "bg-white",
+              "border",
+              "rounded-xl",
+              "shadow-xl"
+            ]}
+          >
+            <LoginCF />
+          </Box>
+
+          <Box
+            className={[
+              "flex",
+              "flex-col",
+              "justify-center",
+              "sm:max-w-[500px] lg:max-w-[500px]",
+              "gap-y-4",
+              "p-6 sm:p-12 lg:p-16",
               "mx-auto",
               "bg-white",
               "border",
@@ -32,7 +54,7 @@ function Login() {
               "shadow-xl"
             ]}
           >
-            <LoginForm />
+            <LoginRHF />
           </Box>
         </Container>
       </Section>

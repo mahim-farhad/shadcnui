@@ -13,7 +13,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { ProductFormSchema } from "@libs/zodValidations";
 
 import { createProductAction }
-  from "@utils/actions/product-actions";
+  from "@utils/actions/products";
 
 import Button from "@components/ui/Button";
 

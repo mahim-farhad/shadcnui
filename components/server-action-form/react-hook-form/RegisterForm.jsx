@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useFormState } from "react-dom";
 
@@ -13,7 +13,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { SignupFormSchema } from "@libs/zodValidations";
 
 import { registerUserAction }
-  from "@utils/actions/auth-actions";
+  from "@utils/actions/auth";
 
 import Button from "@components/ui/Button";
 
@@ -33,8 +33,8 @@ const defaultValues = {
 
 const INITIAL_STATE = {
   data: null,
-  errors: null,
   message: null,
+  errors: null
 };
 
 const convertToFormData = (data) => {

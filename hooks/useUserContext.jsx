@@ -2,19 +2,22 @@
 
 import { createContext, useState, useEffect } from 'react';
 
-import getUser from '@api/fecthUserApi';
+import { getCurrentUser } from '@api/users';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await getUser('/users/me');
+        const userData = await getCurrentUser('/users/me');
+
         setUser(userData);
       } catch (error) {
         console.error("Failed to fetch user data:", error);

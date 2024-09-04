@@ -3,33 +3,45 @@ import { NextResponse } from "next/server";
 import { getUserMeLoader }
   from "@utils/services/get-user-me-loader";
 
-export async function middleware(request) {
+// const adminRoutes = ["/admin"];
+// const authenticatedRoutes = ["/profile"];
+// const publicRoutes = [
+//   "/auth/register",
+//   "/auth/login",
+//   "/"
+// ];
+
+export default async function middleware(req) {
   const user = await getUserMeLoader();
 
-  const currentPath =
-    request.nextUrl.pathname;
+  const userRole = user?.data?.role?.type;
+
+  const currentPath = req.nextUrl.pathname;
+
+  // const isAdminRoute =
+  //   adminRoutes.includes(currentPath);
+
+  // const isAuthenticatedRoute =
+  //   authenticatedRoutes.includes(currentPath);
+
+  // const isPublicRoute =
+  //   publicRoutes.includes(currentPath);
 
   if (currentPath.startsWith("/auth")) {
     if (user?.ok === true) {
-      return NextResponse.redirect(
-        new URL(
-          "/not-found",
-          request.url
-        )
-      );
+      return NextResponse.redirect(new URL(
+        "/profile", req.nextUrl
+      ));
     }
+
+    return NextResponse.next();
   }
 
   if (currentPath.startsWith("/admin")) {
-    if (user?.ok === false) {
-      const loginUrl =
-        new URL("/auth/login", request.url);
-
-      loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
-
-      return NextResponse.redirect(loginUrl);
-    } else if (user?.data?.role?.type !== "admin") {
-      return NextResponse.redirect(new URL("/not-found", request.url));
+    if (!user || userRole !== "admin") {
+      return NextResponse.redirect(new URL(
+        "/not-found", req.nextUrl
+      ));
     }
   }
 
@@ -38,7 +50,9 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    "/auth/:path*",
-    "/admin/:path*",
+    '/admin/:path*',
+    '/auth/:path*',
+    '/profile',
+    '/((?!api|_next/static|_next/image|.*\\.png$).*)'
   ],
 };
