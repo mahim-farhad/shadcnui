@@ -7,6 +7,7 @@ import "@styles/globals.css";
 import ThemeProvider from "@libs/ThemeProvider";
 
 import { Toaster } from "@components/ui/Sonner";
+
 import TopNav from "@components/navigations/Navbar";
 
 export const metadata = {
@@ -22,7 +23,7 @@ function RootLayout({ children }) {
   const bodyClasses = clsx(
     poppins.variable,
     montserrat.variable,
-    firaCode.variable,
+    firaCode.variable
   );
 
   return (

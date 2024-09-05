@@ -1,6 +1,7 @@
 import { getProducts } from "@api/products";
 
 import Icon from "@components/ui/Icon";
+import Link from "@components/ui/Link";
 import Button from "@components/ui/Button";
 import {
   Table,
@@ -10,13 +11,11 @@ import {
   TableRow,
   TableCell
 } from "@components/ui/Table";
+
 import Box from "@components/layouts/Box";
-import Link from "@components/ui/Link";
 
 async function ProductsTable({ page }) {
   const products = await getProducts(page, 20);
-
-  console.log(products)
 
   return (
     <Box>

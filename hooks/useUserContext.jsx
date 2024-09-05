@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await getCurrentUser('/users/me');
+        const userData = await getCurrentUser("/users/me?populate=*");
 
         setUser(userData);
       } catch (error) {
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, loading, error }}>
+    <UserContext.Provider value={{ user, loading, error }}>
       {children}
     </UserContext.Provider>
   );

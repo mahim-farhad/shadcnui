@@ -1,73 +1,45 @@
 import axiosSecure from "@libs/axios/axiosSecure";
 
-export async function createProduct(productData) {
-  try {
-    const res = await axiosSecure.post("/products", {
-      data: { ...productData }
-    });
-
-    return res.data;
-  } catch (error) {
-    if (error.response) {
-      const message =
-        error.response?.data?.message ||
-        error.message;
-
-      throw new Error(message);
-    } else if (error.request) {
-      throw new Error(error.request);
-    } else {
-      throw new Error(error);
-    }
+const noCacheHeaders = {
+  headers: {
+    cache: "no-store"
   }
+};
+
+export async function createProduct(productData) {
+  const res = await axiosSecure.post("/products", {
+    data: { ...productData }
+  });
+
+  return res.data;
+};
+
+export async function updateUser(productId, productData) {
+  const res = await axiosSecure.put(
+    `/users/${productId}`, {
+    data: { ...productData }
+  });
+
+  return res.data;
 };
 
 export async function getProduct(productId) {
-  try {
-    const res = await axiosSecure.get(
-      `/products/${productId}?populate=*`, {
-      headers: { cache: "no-store" }
-    });
+  const res = await axiosSecure.get(
+    `/products/${productId}?populate=*`,
+    noCacheHeaders
+  );
 
-    return res.data;
-  } catch (error) {
-    if (error.response) {
-      const message =
-        error.response?.data?.message ||
-        error.message;
-
-      throw new Error(message);
-    } else if (error.request) {
-      throw new Error(error.request);
-    } else {
-      throw new Error(error);
-    }
-  }
+  return res.data;
 };
 
 export async function getProducts(page = 1, pageSize = 25) {
-  try {
-    const res = await axiosSecure.get(
-      `/products?populate=*`, {
-      headers: { cache: "no-store" },
-      params: {
-        "pagination[page]": page,
-        "pagination[pageSize]": pageSize
-      }
-    });
-
-    return res.data;
-  } catch (error) {
-    if (error.response) {
-      const message =
-        error.response?.data?.message ||
-        error.message;
-
-      throw new Error(message);
-    } else if (error.request) {
-      throw new Error(error.request);
-    } else {
-      throw new Error(error);
+  const res = await axiosSecure.get("/products?populate=*", {
+    noCacheHeaders,
+    params: {
+      "pagination[page]": page,
+      "pagination[pageSize]": pageSize
     }
-  }
+  });
+
+  return res.data;
 };

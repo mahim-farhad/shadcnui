@@ -33,8 +33,6 @@ export default async function middleware(req) {
         "/profile", req.nextUrl
       ));
     }
-
-    return NextResponse.next();
   }
 
   if (currentPath.startsWith("/admin")) {

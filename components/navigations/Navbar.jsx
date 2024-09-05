@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 
-import { logoutUserAction } from "@utils/actions/auth";
+import { logoutAction } from "@utils/actions/auth";
 
 // import { useToggleSidebar } from "@contexts/SidebarProvider"
 
@@ -68,7 +68,7 @@ function TopNav() {
               "text-end",
             )}
           >
-            <form action={logoutUserAction}>
+            <form action={logoutAction}>
               <Button type="submit" size="xs" color="black">
                 Logout
               </Button>

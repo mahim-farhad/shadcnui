@@ -12,7 +12,7 @@ import { useForm, FormProvider } from "react-hook-form";
 
 import { registerZodSchema } from "@libs/zodValidations";
 
-import { registerUserAction }
+import { registerAction }
   from "@utils/actions/auth";
 
 import Button from "@components/ui/Button";
@@ -56,7 +56,7 @@ function RegisterForm() {
   const { handleSubmit, setError, reset } = form;
 
   const [formState, formAction] = useFormState(
-    registerUserAction,
+    registerAction,
     INITIAL_STATE
   );
 

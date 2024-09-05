@@ -2,10 +2,10 @@ import axiosInstance from "@libs/axios/axiosInstance";
 
 export async function revalidatePage(path) {
   try {
-    const res =
-      await axiosInstance.post("/revalidate", {
-        path
-      });
+    const res = await axiosInstance.post(
+      "/revalidate", {
+      path
+    });
 
     return res.data;
   } catch (error) {

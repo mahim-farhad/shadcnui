@@ -11,7 +11,7 @@ import { registerUser, authenticateUser } from "@api/auth";
 
 import { delay } from "@utils/utils";
 
-export async function registerUserAction(prevState, formData) {
+export async function registerAction(prevState, formData) {
   const data =
     Object.fromEntries(formData.entries());
 
@@ -21,10 +21,10 @@ export async function registerUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
-      errors:
-        validatedFields.error.flatten().fieldErrors,
       message:
-        "Required fileds must be filled!"
+        "Required fileds must be filled!",
+      errors:
+        validatedFields.error.flatten().fieldErrors
     };
   }
 
@@ -72,15 +72,15 @@ export async function registerUserAction(prevState, formData) {
     return {
       ...prevState,
       message: errorMessage,
-      errors: fieldErrors,
+      errors: fieldErrors
     };
   }
 
   redirect("/?success=registration-successful!");
 }
 
-export async function loginUserAction(prevState, formData) {
-  await delay(100);
+export async function loginAction(prevState, formData) {
+  await delay(1000);
 
   const validatedFields = loginZodSchema.safeParse({
     identifier: formData.get("identifier"),
@@ -90,10 +90,10 @@ export async function loginUserAction(prevState, formData) {
   if (!validatedFields.success) {
     return {
       ...prevState,
-      errors:
-        validatedFields.error.flatten().fieldErrors,
       message:
         "Required fileds must be filled!",
+      errors:
+        validatedFields.error.flatten().fieldErrors
     };
   }
 
@@ -138,14 +138,14 @@ export async function loginUserAction(prevState, formData) {
     return {
       ...prevState,
       message: errorMessage,
-      errors: fieldErrors,
+      errors: fieldErrors
     };
   }
 
   redirect(redirectTo);
 }
 
-export async function logoutUserAction() {
+export async function logoutAction() {
   await deleteSession();
 
   redirect("/auth/login");
